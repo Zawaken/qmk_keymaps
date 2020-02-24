@@ -39,8 +39,8 @@ enum preonic_keycodes {
 
 #define ARROW MO(_ARROW)
 #define CTL_ESC MT(MOD_LCTL, KC_ESC)
-#define LWRSPC MT(LOWER, KC_SPC)
-#define RAISPC MT(RAISE, KC_SPC)
+#define LWRSPC LT(LOWER, KC_SPC)
+#define RAISPC LT(RAISE, KC_SPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
