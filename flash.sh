@@ -2,20 +2,19 @@
 # POSIX
 
 show_help() {
-     -h     display this help and exit
-     -d     dry mode - no build, no flashing
-     -b     build only mode, no flashing
-     -f     ignore git status and force firmware build
-     -v     verbose mode
+echo '    -h     display this help and exit'
+echo '    -d     dry mode - no build, no flashing'
+echo '    -b     build only mode, no flashing'
+echo '    -f     ignore git status and force firmware build'
+echo '    -v     verbose mode'
 
-Example: ${0##*/} -d -v -f planck_ez
-EOF
+echo 'Example: ${0##*/} -d -v -f planck_ez'
 }
 
-check_git=true
+check_git='true'
 verbose=0
-dry=false
-build_only=false
+dry='false'
+build_only='false'
 
 echo_verbose() {
     if [ $verbose -gt 0 ] ; then
@@ -74,29 +73,29 @@ fi
 KEYSET_VERSION=$(git describe --abbrev=6 --dirty --always --tags)
 KEYSET_DATETIME=$(git --no-pager show --date=short --format="%ad" --name-only | head -n1 | sed -e 's/\s.*$//')
 
-QMK_FIRMWARE=qmk_firmware
-QMK_USER=zawaken
+QMK_FIRMWARE='qmk_firmware'
+QMK_USER='zawaken'
 TARGET_LAYOUT=${LAST_ARG%/} # last argument without last slash
 
 if [ $TARGET_LAYOUT = planck* ] ; then
-    TARGET_KEYBOARD=planck
-    MAKE_PREFIX=planck/rev6
-    IMAGE_EXTENSION=bin
-if [ $TARGET_LAYOUT = preonic* ]; then
-	TARGET_KEYBOARD=preonic
-	MAKE_PREFIX=preonic/rev3
-	IMAGE_EXTENSION=bin
+    TARGET_KEYBOARD='planck'
+    MAKE_PREFIX='planck/rev6'
+    IMAGE_EXTENSION='bin'
+elif [ $TARGET_LAYOUT = preonic* ]; then
+	TARGET_KEYBOARD='preonic'
+	MAKE_PREFIX='preonic/rev3'
+	IMAGE_EXTENSION='bin'
 else
     TARGET_KEYBOARD=$TARGET_LAYOUT
     MAKE_PREFIX=$TARGET_LAYOUT
-    IMAGE_EXTENSION=hex
+    IMAGE_EXTENSION='hex'
 fi
 
 BINARY_NAME="${TARGET_LAYOUT}_${QMK_USER}.${IMAGE_EXTENSION}"
 
-echo_verbose "Using firmware folder '$QMK_FIRMWARE'"
+echo "Using firmware folder '$QMK_FIRMWARE'"
 echo "Layout: ${TARGET_LAYOUT}, version: ${KEYSET_VERSION}/${KEYSET_DATETIME}"
-echo_verbose "Building binary '${BINARY_NAME}'"
+echo "Building binary '${BINARY_NAME}'"
 
 if $dry; then
     echo "\nSkipped building and flashing because of dry mode, exiting"
@@ -126,5 +125,3 @@ if $build_only; then
 fi
 
 echo "\nFlashing...\n"
-./bin/wally-cli $QMK_FIRMWARE/${BINARY_NAME}
-
