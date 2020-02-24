@@ -81,10 +81,12 @@ if [ $TARGET_LAYOUT = planck* ] ; then
     TARGET_KEYBOARD='planck'
     MAKE_PREFIX='planck/rev6'
     IMAGE_EXTENSION='bin'
+    MAKE_SUFFIX=':dfu-util-wait'
 elif [ $TARGET_LAYOUT = preonic* ]; then
 	TARGET_KEYBOARD='preonic'
 	MAKE_PREFIX='preonic/rev3'
 	IMAGE_EXTENSION='bin'
+	MAKE_SUFFIX=':dfu-util-wait'
 else
     TARGET_KEYBOARD=$TARGET_LAYOUT
     MAKE_PREFIX=$TARGET_LAYOUT
@@ -108,7 +110,7 @@ cd $QMK_FIRMWARE
 make git-submodule
 rm -rf $QMK_FIRMWARE/${TARGET_LAYOUT}_${QMK_USER}.bin
 echo "\nBuilding layout ${MAKE_PREFIX}:${QMK_USER}"
-make ${MAKE_PREFIX}:${QMK_USER} KEYSET_VERSION=\"${KEYSET_VERSION}\" KEYSET_DATETIME=\"${KEYSET_DATETIME}\"
+sudo ./$QMK_FIRMWARE/util/docker_build ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX} KEYSET_VERSION=\"${KEYSET_VERSION}\" KEYSET_DATETIME=\"${KEYSET_DATETIME}\"
 MAKE_RESULT=$?
 cd ..
 
