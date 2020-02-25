@@ -84,6 +84,10 @@ elif [ $TARGET_LAYOUT = preonic* ]; then
 	MAKE_PREFIX='preonic/rev3'
 	IMAGE_EXTENSION='bin'
 	MAKE_SUFFIX=':dfu-util-wait'
+elif [ $TARGET_LAYOUT = m60-a* ] ; then
+	TARGET_KEYBOARD='rama_works_m60_a'
+	MAKE_PREFIX='wilba_tech/rama_works_m60_a'
+	IMAGE_EXTENSION='hex'
 else
     TARGET_KEYBOARD=$TARGET_LAYOUT
     MAKE_PREFIX=$TARGET_LAYOUT
