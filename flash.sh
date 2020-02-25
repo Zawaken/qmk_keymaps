@@ -101,7 +101,15 @@ if $dry; then
     exit
 fi
 
+echo ''
+echo ''
+echo "Copying keymap \"${MAKE_PREFIX}:${QMK_USER}\""
+echo ''
 rsync -avh $1/{config.h,keymap.c,rules.mk} $QMK_FIRMWARE/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}/
+echo ''
+echo ''
+echo "Copying ./common to \"${QMK_FIRMWARE}/users/${QMK_USER}\""
+echo ''
 rsync -avh --delete common/ $QMK_FIRMWARE/users/$QMK_USER/
 cd $QMK_FIRMWARE
 make git-submodule
@@ -112,7 +120,7 @@ if $build_only; then
 	echo "Skipped flashing because of build_only mode, exiting"
 	exit
 else
-	echo "Flashing ${MAKE_PREFIX}:${QMK_USER}"
+	echo "Flashing \"${MAKE_PREFIX}:${QMK_USER}\""
 	sudo ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
 fi
 MAKE_RESULT=$?
