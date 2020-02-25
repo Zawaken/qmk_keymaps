@@ -70,9 +70,6 @@ if [[ -n $(git status --porcelain) ]] && $check_git; then
     exit 1
 fi
 
-KEYSET_VERSION=$(git describe --abbrev=6 --dirty --always --tags)
-KEYSET_DATETIME=$(git --no-pager show --date=short --format="%ad" --name-only | head -n1 | sed -e 's/\s.*$//')
-
 QMK_FIRMWARE='qmk_firmware'
 QMK_USER='zawaken'
 TARGET_LAYOUT=${LAST_ARG%/} # last argument without last slash
@@ -109,13 +106,14 @@ rsync -avh --delete common/ $QMK_FIRMWARE/users/$QMK_USER/
 cd $QMK_FIRMWARE
 make git-submodule
 rm -rf $QMK_FIRMWARE/${TARGET_LAYOUT}_${QMK_USER}.bin
-echo "\nBuilding layout ${MAKE_PREFIX}:${QMK_USER}"
+echo "\nBuilding layout ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}"
 if $build_only; then
-	sudo ./util/docker_build ${MAKE_PREFIX}:${QMK_USER} KEYSET_VERSION="\"${KEYSET_VERSION}\"" KEYSET_DATETIME="\"${KEYSET_DATETIME}\""
+	sudo ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}
 	echo "Skipped flashing because of build_only mode, exiting"
 	exit
 else
-	sudo ./util/docker_build ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX} KEYSET_VERSION="\"${KEYSET_VERSION}\"" KEYSET_DATETIME="\"${KEYSET_DATETIME}\""
+	echo "Flashing ${MAKE_PREFIX}:${QMK_USER}"
+	sudo ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
 fi
 MAKE_RESULT=$?
 cd ..
@@ -124,12 +122,3 @@ if [ ${MAKE_RESULT} -ne 0 ] ; then
   echo "Can't build binary, exiting"
   exit 1
 fi
-
-echo "Binary '${BINARY_NAME}' created"
-
-if $build_only; then
-    echo "\nSkipped flashing because of dry mode, exiting"
-    exit
-fi
-
-echo "\nFlashing...\n"
