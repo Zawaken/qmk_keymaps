@@ -110,7 +110,13 @@ cd $QMK_FIRMWARE
 make git-submodule
 rm -rf $QMK_FIRMWARE/${TARGET_LAYOUT}_${QMK_USER}.bin
 echo "\nBuilding layout ${MAKE_PREFIX}:${QMK_USER}"
-sudo ./$QMK_FIRMWARE/util/docker_build ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX} KEYSET_VERSION=\"${KEYSET_VERSION}\" KEYSET_DATETIME=\"${KEYSET_DATETIME}\"
+if $build_only; then
+	sudo ./util/docker_build ${MAKE_PREFIX}:${QMK_USER} KEYSET_VERSION="\"${KEYSET_VERSION}\"" KEYSET_DATETIME="\"${KEYSET_DATETIME}\""
+	echo "Skipped flashing because of build_only mode, exiting"
+	exit
+else
+	sudo ./util/docker_build ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX} KEYSET_VERSION="\"${KEYSET_VERSION}\"" KEYSET_DATETIME="\"${KEYSET_DATETIME}\""
+fi
 MAKE_RESULT=$?
 cd ..
 
