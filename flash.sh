@@ -114,7 +114,6 @@ rsync -avh --delete common/ $QMK_FIRMWARE/users/$QMK_USER/
 cd $QMK_FIRMWARE
 make git-submodule
 rm -rf $QMK_FIRMWARE/${TARGET_LAYOUT}_${QMK_USER}.bin
-echo "\nBuilding layout ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}"
 if $build_only; then
 	sudo ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}
 	echo "Skipped flashing because of build_only mode, exiting"

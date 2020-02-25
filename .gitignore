@@ -1,5 +1,6 @@
 *.bin
 *.hex
 *.swp
+.vscode
 
 zawaken/
