@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 show_help() {
 printf '    -h     display this help and exit
     -b     build only mode, no flashing
@@ -53,6 +53,11 @@ elif test "${TARGET_LAYOUT}" = "m60-a"; then
   TARGET_KEYBOARD='rama_works_m60_a'
   MAKE_PREFIX='wilba_tech/rama_works_m60_a'
   IMAGE_EXTENSION='hex'
+elif test "${TARGET_LAYOUT}" = "viterbi"; then
+  TARGET_KEYBOARD='keebio/viterbi'
+  MAKE_PREFIX='keebio/viterbi/rev2'
+  IMAGE_EXTENSION='hex'
+  MAKE_SUFFIX=':dfu'
 else
   TARGET_KEYBOARD=$TARGET_LAYOUT
   MAKE_PREFIX=$TARGET_LAYOUT
@@ -66,8 +71,10 @@ Using firmware folder ${QMK_FIRMWARE}
 Layout: ${TARGET_LAYOUT}
 Building binary '${BINARY_NAME}'"
 
+rm -rf $QMK_FIRMWARE/.build
 printf "\n\nCopying keymap \"${MAKE_PREFIX}:${QMK_USER}\" \n\n"
-rsync -avh $TARGET_LAYOUT/{config.h,keymap.c,rules.mk} $QMK_FIRMWARE/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}/ >/dev/null 2>&1
+mkdir -p $QMK_FIRMWARE/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}
+rsync -avh $1/{config.h,keymap.c,rules.mk} $QMK_FIRMWARE/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}/ # >/dev/null 2>&1
 printf "Copying ./common to \"./${QMK_FIRMWARE}/users/${QMK_USER}\"\n\n"
 rsync -avh --delete common/ $QMK_FIRMWARE/users/$QMK_USER/ >/dev/null 2>&1
 make --directory=qmk_firmware git-submodule >/dev/null 2>&1

@@ -4,7 +4,7 @@
 #### I will also add more keyboards to this repo whenever I get new ones.
 
 
-Flash script shamelessly stolen and modified from [ai212983](https://github.com/ai212983)
+Flash script shamelessly stolen and rewritten from [ai212983](https://github.com/ai212983)
 
 
 ## TODO:
