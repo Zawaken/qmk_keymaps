@@ -24,6 +24,9 @@ while true; do
     -b|--build_only)
       build_only=true
       ;;
+    -p|--podman)
+      podman=1
+      ;;
     *)
       break
       ;;
@@ -58,6 +61,16 @@ elif test "${TARGET_LAYOUT}" = "viterbi"; then
   MAKE_PREFIX='keebio/viterbi/rev2'
   IMAGE_EXTENSION='hex'
   MAKE_SUFFIX=':dfu'
+elif test "${TARGET_LAYOUT}" = "nyquist"; then
+  TARGET_KEYBOARD='keebio/nyquist'
+  MAKE_PREFIX='keebio/nyquist/rev3'
+  IMAGE_EXTENSION='hex'
+  MAKE_SUFFIX=':dfu'
+elif test "${TARGET_LAYOUT}" = "vitamins_included"; then
+  TARGET_KEYBOARD='vitamins_included'
+  MAKE_PREFIX='vitamins_included/rev2'
+  IMAGE_EXTENSION='hex'
+  MAKE_SUFFIX=':dfu'
 else
   TARGET_KEYBOARD=$TARGET_LAYOUT
   MAKE_PREFIX=$TARGET_LAYOUT
@@ -80,12 +93,23 @@ rsync -avh --delete common/ $QMK_FIRMWARE/users/$QMK_USER/ >/dev/null 2>&1
 make --directory=qmk_firmware git-submodule >/dev/null 2>&1
 rm -rf $QMK_FIRMWARE/${TARGET_LAYOUT}_${QMK_USER}.${IMAGE_EXTENSION}
 cd $QMK_FIRMWARE
-if $build_only; then
-  printf 'build_only specified, skipping flash\n===================================================\n\n'
-  ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}
-  exit
+if test $podman -eq 1; then
+  rsync -avh --delete ../podman_build.sh ./util/
+  if $build_only; then
+    printf 'build_only specified, skipping flash\n===================================================\n\n'
+    ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}
+  else
+    printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}\"\n===================================================\n\n"
+    ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+  fi
 else
-  printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}\"\n===================================================\n\n"
-  ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+  if $build_only; then
+    printf 'build_only specified, skipping flash\n===================================================\n\n'
+    ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}
+    exit
+  else
+    printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}\"\n===================================================\n\n"
+    ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+  fi
 fi
 cd ..
