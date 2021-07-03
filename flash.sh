@@ -5,13 +5,11 @@ show_help() {
 printf '    -h     display this menu and exit
     -b     build only mode, no flashing
     -v     verbose mode
-    -d     build with docker instead of podman
+    -p     build with podman instead of docker
 
 Example: ./flash.sh -p -v preonic\n'
 }
 
-verbose=0
-PODMAN=1
 build_only='false'
 QMK_FIRMWARE='qmk_firmware'
 QMK_USER='zawaken'
@@ -33,8 +31,9 @@ while true; do
     -b|--build_only)
       build_only=true
       ;;
-    -d|--docker)
-      PODMAN=
+    -p|--podman)
+      export RUNTIME="podman"
+      #PODMAN=1
       ;;
     *)
       break

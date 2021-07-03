@@ -19,7 +19,7 @@ if [ $# -gt 1 ]; then
 	exit 1
 elif ! command -v podman >/dev/null 2>&1; then
 	errcho "Error: podman not found"
-	errcho "See https://docs.podman.com/install/#supported-platforms for installation instructions"
+	errcho "See https://podman.io/getting-started/installation.html for installation instructions"
 	exit 2
 fi
 
