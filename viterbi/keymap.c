@@ -1,6 +1,7 @@
+// includes {{{
 #include QMK_KEYBOARD_H
-
-
+// }}}
+// layers/defines {{{
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
@@ -10,20 +11,22 @@
 #define _LOWER 2
 #define _RAISE 3
 #define _ADJUST 16
-
+#define CTL_ESC MT(MOD_LCTL, KC_ESC)
+// }}}
+// custom_keycodes {{{
 enum custom_keycodes {
   COLEMAK = SAFE_RANGE,
   QWERTY,
   LOWER,
   RAISE,
   ADJUST,
+  SARCASM
 };
-
-#define CTL_ESC MT(MOD_LCTL, KC_ESC)
-
+// }}}
+// keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* COLEMAK
+/* COLEMAK {{{
  * ,------------------------------------------------.      ,------------------------------------------------.
  * |  Ins |   `  |   1  |   2  |   3  |   4  |   5  |      |   6  |   7  |   8  |   9  |   0  | Bksp | Del  |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
@@ -43,8 +46,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_PGUP, KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,     KC_K   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_ENT , KC_END ,
     KC_PGDN, ADJUST , KC_ALGR, KC_LALT, KC_LGUI, LOWER  , KC_SPC ,     KC_BSPC , RAISE  , KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_END
   ),
-
-/* QWERTY
+// }}}
+/* QWERTY {{{
  * ,------------------------------------------------.      ,------------------------------------------------.
  * |  Ins |   `  |   1  |   2  |   3  |   4  |   5  |      |   6  |   7  |   8  |   9  |   0  | Bksp | Del  |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
@@ -64,8 +67,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_PGUP, KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,     KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_ENT , KC_END ,
     KC_PGDN, ADJUST , KC_LCTL, KC_LALT, KC_LGUI, LOWER  , KC_SPC ,     KC_BSPC , RAISE  , KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_DEL
   ),
-
-/* Lower
+// }}}
+/* Lower {{{
  * ,------------------------------------------------.      ,------------------------------------------------.
  * |      |   ~  |  F1  |  F3  |  F3  |  F4  |  F5  |      |  F6  |  F7  |  F8  |  F9  | F10  | F11  | F12  |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
@@ -85,8 +88,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,     KC_F12 , _______, S(KC_NUBS), _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______,     _______, _______, KC_MPLY, KC_VOLD, KC_VOLU, KC_MNXT, KC_MUTE
   ),
-
-/* Raise
+// }}}
+/* Raise {{{
  * ,------------------------------------------------.      ,------------------------------------------------.
  * |      |   ~  |  F1  |  F3  |  F3  |  F4  |  F5  |      |  F6  |  F7  |  F8  |  F9  | F10  | F11  | F12  |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
@@ -106,19 +109,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 ,     KC_F12 , KC_NUHS, KC_NUBS, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______,     _______, _______, KC_MPLY, KC_VOLD, KC_VOLU, KC_MNXT, KC_MUTE
   ),
-
+// }}}
+/* ADJUST {{{
+   */
   [_ADJUST] = LAYOUT_ortho_5x14(
     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,       KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______,
     _______, _______, RESET  , RGB_TOG, RGB_MOD, RGB_HUD, RGB_HUI,     RGB_SAD, RGB_SAI, RGB_VAD, RGB_VAI, _______, KC_DEL,  _______,
-    _______, LCTL(KC_ESC), _______, _______, AU_ON,   AU_OFF,  AG_NORM,     AG_SWAP, QWERTY,  COLEMAK, _______, _______, _______, _______,
+    _______, LCTL(KC_ESC), _______, _______, AU_ON,   AU_OFF,  AG_NORM,     AG_SWAP, QWERTY,  COLEMAK, _______, _______, SARCASM, _______,
     _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______
   )
-
+// }}}
 };
-
-
+// }}}
+// layer switching {{{
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  static bool sarcasm_flag = false;
+  static bool caps_flag = false;
+
+  if(sarcasm_flag) {
+    if(record->event.pressed) {
+      if(keycode != KC_SPC) {
+        register_code(KC_CAPS);
+        unregister_code(KC_CAPS);
+        caps_flag = !caps_flag;
+      }
+    }
+  }
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
@@ -158,6 +175,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case SARCASM:
+      if(record->event.pressed) {
+        sarcasm_flag = !sarcasm_flag;
+        if(caps_flag) {
+          register_code(KC_CAPS);
+          unregister_code(KC_CAPS);
+        }
+      }
+      return false;
+      break;
   }
   return true;
 }
+// }}}

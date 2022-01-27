@@ -1,4 +1,4 @@
-/* Copyright 2015-2017 Jack Humbert
+/* Copyright 2015-2017 Jack Humbert {{{
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,11 +12,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+ }}} */
+// includes {{{
 #include QMK_KEYBOARD_H
 #include "muse.h"
-
+// }}}
+// layers and preonic_keycodes {{{
 enum preonic_layers {
   _COLEMAK,
   _QWERTY,
@@ -34,15 +35,18 @@ enum preonic_keycodes {
   LOWER,
   RAISE,
   BACKLIT,
-  ARROW
+  ARROW,
+  SARCASM
 };
-
+// }}}
+// defines {{{
 #define ARROW MO(_ARROW)
 #define CTL_ESC MT(MOD_LCTL, KC_ESC)
-
+// }}}
+// keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* Colemak
+/* Colemak {{{
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -62,8 +66,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,  \
   ARROW, KC_ALGR, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_BSPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
 ),
-
-/* Qwerty
+// }}}
+/* Qwerty {{{
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |  \   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -83,8 +87,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,  \
   ARROW, KC_ALGR, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_BSPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
 ),
-
-/* Workman
+// }}}
+/* Workman {{{
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -104,8 +108,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT, KC_Z, KC_X,    KC_M,    KC_C,    KC_V,    KC_K,    KC_L,    KC_COMM,    KC_DOT,    KC_SLSH,    KC_SFTENT,  \
   ARROW, KC_ALGR, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_BSPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
 ),
-
-/* Arrow layout
+// }}}
+/* Arrow layout {{{
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -125,8 +129,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, _______, _______, _______, _______, _______, MAGIC_TOGGLE_NKRO, KC_P0, KC_P0, KC_PCMM, KC_PENT, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
 ),
-
-/* Lower
+// }}}
+/* Lower {{{
  * ,-----------------------------------------------------------------------------------.
  * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -146,8 +150,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,S(KC_NUHS),S(KC_NUBS),KC_HOME, KC_END, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MPLY, KC_VOLD, KC_VOLU, KC_MNXT \
 ),
-
-/* Raise
+// }}}
+/* Raise {{{
  * ,-----------------------------------------------------------------------------------.
  * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -167,8 +171,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS, KC_PGUP, KC_PGDN, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, KC_MPLY, KC_VOLD, KC_VOLU, KC_MNXT  \
 ),
-
-/* Adjust (Lower + Raise)
+// }}}
+/* Adjust (Lower + Raise) {{{
  * ,-----------------------------------------------------------------------------------.
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -184,15 +188,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = LAYOUT_preonic_grid( \
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  \
   _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON, TERM_OFF,_______, _______, KC_DEL,  \
-  _______, KC_INS, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, WORKMAN,  _______, _______, \
+  _______, KC_INS, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, WORKMAN,  _______, SARCASM, \
   _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
 )
-
-
 };
-
+// }}}
+// }}}
+// layer switching {{{
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  static bool sarcasm_flag = false;
+  static bool caps_flag = false;
+
+  if(sarcasm_flag) {
+    if(record->event.pressed) {
+      if(keycode != KC_SPC) {
+        register_code(KC_CAPS);
+        unregister_code(KC_CAPS);
+        caps_flag = !caps_flag;
+      }
+    }
+  }
   switch (keycode) {
         case QWERTY:
           if (record->event.pressed) {
@@ -249,10 +265,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
           return false;
           break;
-      }
+       case SARCASM:
+	      if(record->event.pressed) {
+	        sarcasm_flag = !sarcasm_flag;
+	        if(caps_flag) {
+            register_code(KC_CAPS);
+	          unregister_code(KC_CAPS);
+	        }
+	      }
+      return false;
+      break;
+    }
     return true;
 };
-
+// }}}
+// variables {{{
 bool muse_mode = false;
 uint8_t last_muse_note = 0;
 uint16_t muse_counter = 0;
@@ -335,3 +362,4 @@ bool music_mask_user(uint16_t keycode) {
       return true;
   }
 }
+// }}}
