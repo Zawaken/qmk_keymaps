@@ -55,10 +55,10 @@ dir=$(pwd -W 2>/dev/null) || dir=$PWD  # Use Windows path if on Windows
 # Run container and build firmware
 podman run --rm -i $usb_args \
   --runtime=crun \
-	-w /qmk_firmware \
-	-v "$dir":/qmk_firmware \
+	-w /qmk_keymaps/qmk_firmware \
+	-v "$dir":/qmk_keymaps \
 	-e ALT_GET_KEYBOARDS=true \
 	-e SKIP_GIT="$SKIP_GIT" \
 	-e MAKEFLAGS="$MAKEFLAGS" \
-  qmkfm/base_container \
+  qmkfm/qmk_cli \
 	make "$keyboard${keymap:+:$keymap}${target:+:$target}"

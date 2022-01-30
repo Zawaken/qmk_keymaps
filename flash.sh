@@ -72,13 +72,13 @@ if test "${1}"; then
       TARGET_KEYBOARD='planck'
       MAKE_PREFIX='planck/rev6'
       IMAGE_EXTENSION='bin'
-      MAKE_SUFFIX=':dfu-util-wait'
+      MAKE_SUFFIX=':dfu-util'
       ;;
     preonic)
       TARGET_KEYBOARD='preonic'
       MAKE_PREFIX='preonic/rev3'
       IMAGE_EXTENSION='bin'
-      MAKE_SUFFIX=":dfu-util-wait"
+      MAKE_SUFFIX=":dfu-util"
       ;;
     m60-a)
       TARGET_KEYBOARD='rama_works_m60_a'
@@ -149,23 +149,23 @@ make --directory=qmk_firmware git-submodule >/dev/null 2>&1
 rm -rf $QMK_FIRMWARE/${TARGET_LAYOUT}_${QMK_USER}.${IMAGE_EXTENSION}
 
 # Build/flash
-cd $QMK_FIRMWARE
-if test ${PODMAN}; then
-  rsync -avh --delete ../podman_build.sh ./util/
+# cd $QMK_FIRMWARE
+# if test ${PODMAN}; then
+#   rsync -avh --delete ../podman_build.sh ./util/
+#   if $build_only; then
+#     printf 'build_only specified, skipping flash\n===================================================\n\n'
+#     ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}
+#   else
+#     printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
+#     ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+#   fi
+# else
   if $build_only; then
     printf 'build_only specified, skipping flash\n===================================================\n\n'
-    ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}
-  else
-    printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
-    ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
-  fi
-else
-  if $build_only; then
-    printf 'build_only specified, skipping flash\n===================================================\n\n'
-    ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}
+    ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}
     exit
   else
     printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
-    ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+    ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
   fi
-fi
+# fi
