@@ -156,7 +156,7 @@ if test ${PODMAN}; then
     printf 'build_only specified, skipping flash\n===================================================\n\n'
     ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}
   else
-    printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}\"\n===================================================\n\n"
+    printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
     ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
   fi
 else
@@ -165,7 +165,7 @@ else
     ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}
     exit
   else
-    printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}\"\n===================================================\n\n"
+    printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
     ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
   fi
 fi
