@@ -22,14 +22,14 @@ enum framework_layers {
     _BASE,
     _LOWER,
     _RAISE,
-    _BOTH,
+    _ADJUST,
     _FN
 };
 
 enum framework_keycodes {
     LOWER = SAFE_RANGE,
     RAISE,
-    BOTH,
+    ADJUST,
     FN
 };
 // }}}
@@ -69,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 // }}}
 // Adjust {{{
-[_BOTH] = framework_via(
+[_ADJUST] = framework_via(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
