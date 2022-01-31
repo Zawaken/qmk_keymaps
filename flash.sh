@@ -48,7 +48,6 @@ while true; do
       ;;
     -p|--podman)
       export RUNTIME="podman"
-      #PODMAN=1
       ;;
     -*)
       show_help
@@ -149,23 +148,11 @@ make --directory=qmk_firmware git-submodule >/dev/null 2>&1
 rm -rf $QMK_FIRMWARE/${TARGET_LAYOUT}_${QMK_USER}.${IMAGE_EXTENSION}
 
 # Build/flash
-# cd $QMK_FIRMWARE
-# if test ${PODMAN}; then
-#   rsync -avh --delete ../podman_build.sh ./util/
-#   if $build_only; then
-#     printf 'build_only specified, skipping flash\n===================================================\n\n'
-#     ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}
-#   else
-#     printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
-#     ./util/podman_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
-#   fi
-# else
-  if $build_only; then
-    printf 'build_only specified, skipping flash\n===================================================\n\n'
-    ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}
-    exit
-  else
-    printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
-    ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
-  fi
-# fi
+if $build_only; then
+  printf 'build_only specified, skipping flash\n===================================================\n\n'
+  ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}
+  exit
+else
+  printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
+  ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+fi
