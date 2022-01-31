@@ -15,6 +15,7 @@
  */
 #include QMK_KEYBOARD_H
 
+#define CTL_ESC MT(MOD_LCTL, KC_ESC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_ortho_5x14(
@@ -22,19 +23,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * ,-------------------------------------------------------------------------------------------------.
       * |   `  |   1  |   2  |   3  |   4  |   5  |   -  |   +  |   6  |   7  |   8  |   9  |   0  | Bksp |
       * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
-      * | Tab  |   Q  |   W  |   E  |   R  |   T  |   [  |   ]  |   Y  |   U  |   I  |   O  |   P  | Del  |
+      * | Tab  |   Q  |   W  |   F  |   P  |   G  |   [  |   ]  |   J  |   L  |   U  |   Y  |   ;  | Del  |
       * |------+------+------+------+------+-------------+------+------+------+------+------+------+------|
-      * | Esc  |   A  |   S  |   D  |   F  |   G  | Home | PgUp |   H  |   J  |   K  |   L  |   ;  |  "   |
+      * | Esc  |   A  |   R  |   S  |   T  |   D  | Home | PgUp |   H  |   N  |   E  |   I  |   O  |  "   |
       * |------+------+------+------+------+------|------+------+------+------+------+------+------+------|
-      * | Shift|   Z  |   X  |   C  |   V  |   B  | End  | PgDn |   N  |   M  |   ,  |   .  |   /  | Enter|
+      * | Shift|   Z  |   X  |   C  |   V  |   B  | End  | PgDn |   K  |   M  |   ,  |   .  |   /  | Enter|
       * |------+------+------+------+------+------+------+------+------+------+------+------+------+------|
       * | Ctrl |  GUI | CpsLk|  Alt |  Fn2 | Space| Space| Space| Space|  Fn1 | Left | Down |  Up  | Right|
       * `-------------------------------------------------------------------------------------------------'
       */
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_MINS, KC_EQL,  KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_LBRC, KC_RBRC, KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN,    KC_DEL,
-    KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_HOME, KC_PGUP, KC_H,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_END,  KC_PGDN, KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+    KC_CTL_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_HOME, KC_PGUP, KC_H,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_END,  KC_PGDN, KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
     KC_LGUI, KC_LCTL, KC_LALT, KC_CAPS, MO(2),   KC_BSPC, KC_BSPC, KC_SPC,  KC_SPC,  TG(1),   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
   ),
 
