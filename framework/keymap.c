@@ -23,14 +23,14 @@ enum framework_layers {
     _LOWER,
     _RAISE,
     _ADJUST,
-    _FN
+    _FN,
 };
 
 enum framework_keycodes {
     LOWER = SAFE_RANGE,
     RAISE,
     ADJUST,
-    FN
+    FN,
 };
 // }}}
 // defines {{{
@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,       KC_G,    KC_J,   KC_L,       KC_U,    KC_Y,    KC_SCLN,    KC_BSPC,
     CTL_ESC,  KC_A,    KC_R,    KC_S,    KC_T,       KC_D,    KC_H,   KC_N,       KC_E,    KC_I,    KC_O, KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,       KC_B,    KC_K,   KC_M,       KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-    KC_LCTL, KC_LGUI, KC_LALT, MO(_FN), MO(_LOWER), KC_SPC,  KC_SPC, MO(_RAISE), KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,
+    MO(_FN), KC_ALGR, KC_LALT, KC_LGUI, MO(_LOWER), KC_SPC,  KC_BSPC, MO(_RAISE), KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,
     KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP
 ),
 // }}}
@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LEAD, KC_F1,   KC_F2,   KC_F3,   KC_F4,   _______, _______, _______,   _______, KC_LBRC, KC_RBRC, KC_BSLS,
     KC_DEL,  KC_F5,   KC_F6,   KC_F7,   KC_F8,   _______, _______, _______,   _______, _______, _______, _______,
     _______, KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______, _______, _______,   _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, MO(_BOTH), KC_HOME, KC_PGDN, KC_PGUP, KC_END,
+    _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,
     C(S(KC_TAB)), C(KC_TAB)
 ),
 // }}}
@@ -64,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, MO(_BOTH), _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     C(KC_LEFT), C(KC_RIGHT)
 ),
 // }}}
@@ -143,3 +143,46 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return true;
 }
 // }}}
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  static bool sarcasm_flag = false;
+  static bool caps_flag = false;
+
+  if(sarcasm_flag) {
+    if(record->event.pressed) {
+      if(ekycode != KC_SPC) {
+        register_code(KC_CAPS);
+        unregister_code(KC_CAPS);
+        caps_flag = !caps_flag;
+      }
+    }
+  }
+  switch (keycode) {
+    case LOWER:
+      if (record->event.pressed) {
+        layer_on(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+    case RAISE:
+      if (record->event.pressed) {
+        layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+    case SARCASM:
+      if(record->event.pressed) {
+        sarcasm_flag = !sarcasm_flag;
+        if(caps_flag) {
+          register_code(KC_CAPS);
+          unregister_code(KC_CAPS);
+        }
+      }
+    return false;
+    break;
+  }
+  return true;
+};
