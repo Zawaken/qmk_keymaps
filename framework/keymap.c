@@ -23,18 +23,19 @@ enum framework_layers {
     _LOWER,
     _RAISE,
     _ADJUST,
-    _FN,
+    _ARROW,
 };
 
 enum framework_keycodes {
     LOWER = SAFE_RANGE,
     RAISE,
     ADJUST,
-    FN,
+    ARROW,
 };
 // }}}
 // defines {{{
 #define CTL_ESC(MOD_LCTL, KC_ESC)
+#define ARROW MO(_ARROW)
 // }}}
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -78,8 +79,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     C(KC_Z), C(KC_Y)
 ),
 // }}}
-// Function {{{
-[_FN] = framework_via(
+// ARROW {{{
+[_ARROW] = framework_via(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
@@ -97,36 +98,6 @@ void matrix_scan_user(void) {
     LEADER_DICTIONARY() {
         leading = false;
         leader_end();
-
-        // qq, alt+f4 close window
-        SEQ_TWO_KEYS(KC_Q, KC_Q) {
-            tap_code16(A(KC_F4));
-        }
-
-        // ee, open explorer
-        SEQ_TWO_KEYS(KC_E, KC_E) {
-            tap_code16(G(KC_E));
-        }
-
-        // rr, windows run prompt
-        SEQ_TWO_KEYS(KC_R, KC_R) {
-            tap_code16(G(KC_R));
-        }
-
-        // ww, maximize window
-        SEQ_TWO_KEYS(KC_W, KC_W) {
-            tap_code16(G(KC_UP));
-        }
-
-        // ss, minimize window
-        SEQ_TWO_KEYS(KC_S, KC_S) {
-            tap_code16(G(KC_DOWN));
-        }
-
-        // <space><space>, toggle desktop
-        SEQ_TWO_KEYS(KC_SPC, KC_SPC) {
-            tap_code16(G(KC_D));
-        }
     }
 }
 // }}}
@@ -143,6 +114,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return true;
 }
 // }}}
+// Layer switching {{{
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   static bool sarcasm_flag = false;
   static bool caps_flag = false;
@@ -185,4 +157,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     break;
   }
   return true;
-};
+}; // }}}

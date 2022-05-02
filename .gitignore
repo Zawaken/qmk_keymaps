@@ -2,6 +2,6 @@
 *.hex
 *.swp
 .vscode
-.ccls_cache/*
+.ccls-cache/*
 
 zawaken/
