@@ -103,10 +103,10 @@ if test "${1}"; then
       MAKE_SUFFIX=':dfu'
       ;;
     framework)
-      TARGET_KEYBOARD='framework'
+      TARGET_KEYBOARD='7c8/framework'
       MAKE_PREFIX='7c8/framework'
-      IMAGE_EXTENSION='hex'
-      MAKE_SUFFIX=':dfu'
+      IMAGE_EXTENSION='bin'
+      MAKE_SUFFIX=':flash'
       ;;
     *)
       printf "Layout ${TARGET_LAYOUT} not found in the list, maybe you should add it?\nexiting\n"
