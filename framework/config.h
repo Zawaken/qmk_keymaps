@@ -21,3 +21,6 @@
 /* defining an extra row for encoder assignment in VIA */
 #undef MATRIX_ROWS
 #define MATRIX_ROWS 11
+
+#undef DEBOUNCE
+#define DEBOUNCE 6
