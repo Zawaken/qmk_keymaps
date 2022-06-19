@@ -20,17 +20,17 @@
 // Layers and keycodes {{{
 enum framework_layers {
     _BASE,
+    _QWERTY,
     _LOWER,
     _RAISE,
     _ADJUST,
     _ARROW,
-    _QWERTY,
 };
 
 enum framework_keycodes {
-    LOWER = SAFE_RANGE,
-    BASE,
+    BASE = SAFE_RANGE,
     QWERTY,
+    LOWER,
     RAISE,
     ADJUST,
     ARROW,
@@ -39,7 +39,6 @@ enum framework_keycodes {
 // }}}
 // defines {{{
 #define CTL_ESC MT(MOD_LCTL, KC_ESC)
-#define ARROW MO(_ARROW)
 // }}}
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -58,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,       KC_5,    KC_6,   KC_7,       KC_8,    KC_9,    KC_0,    KC_MEDIA_PLAY_PAUSE,
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,       KC_T,    KC_Y,   KC_U,       KC_I,    KC_O,    KC_P,    KC_BSPC,
     CTL_ESC,  KC_A,    KC_S,    KC_D,    KC_F,       KC_G,    KC_H,   KC_J,       KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,       KC_B,    KC_K,   KC_M,       KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,       KC_B,    KC_N,   KC_M,       KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
     ARROW, KC_ALGR, KC_LALT, KC_LGUI, LOWER, KC_SPC, KC_SPC, RAISE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT,
     KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP
 ),
@@ -87,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = framework_via(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, RESET, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,
-    _______, _______, _______, _______, _______, _______, _______, _______, QWERTY, BASE, _______, SARCASM,
+    _______, _______, _______, _______, _______, _______, _______, QWERTY, BASE, _______, _______, SARCASM,
     // _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SARCASM,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, EEP_RST, DEBUG,
@@ -167,6 +166,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
+      break;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
@@ -176,6 +176,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
+      break;
+    case ARROW:
+      if (record->event.pressed) {
+        layer_on(_ARROW);
+      } else {
+        layer_off(_ARROW);
+      }
+      return false;
+      break;
     case SARCASM:
       if(record->event.pressed) {
         sarcasm_flag = !sarcasm_flag;

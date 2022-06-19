@@ -40,7 +40,6 @@ enum preonic_keycodes {
 };
 // }}}
 // defines {{{
-#define ARROW MO(_ARROW)
 #define CTL_ESC MT(MOD_LCTL, KC_ESC)
 // }}}
 // keymaps {{{
@@ -210,73 +209,81 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
   }
   switch (keycode) {
-        case QWERTY:
-          if (record->event.pressed) {
-            set_single_persistent_default_layer(_QWERTY);
-          }
-          return false;
-          break;
-        case COLEMAK:
-          if (record->event.pressed) {
-            set_single_persistent_default_layer(_COLEMAK);
-          }
-          return false;
-          break;
-        case WORKMAN:
-          if (record->event.pressed) {
-            set_single_persistent_default_layer(_WORKMAN);
-          }
-          return false;
-          break;
-        case LOWER:
-          if (record->event.pressed) {
-            layer_on(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-          } else {
-            layer_off(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-          }
-          return false;
-          break;
-        case RAISE:
-          if (record->event.pressed) {
-            layer_on(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-          } else {
-            layer_off(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-          }
-          return false;
-          break;
-        case BACKLIT:
-          if (record->event.pressed) {
-            register_code(KC_RSFT);
-            #ifdef BACKLIGHT_ENABLE
-              backlight_step();
-            #endif
-            #ifdef __AVR__
-            writePinLow(E6);
-            #endif
-          } else {
-            unregister_code(KC_RSFT);
-            #ifdef __AVR__
-            writePinHigh(E6);
-            #endif
-          }
-          return false;
-          break;
-       case SARCASM:
-	      if(record->event.pressed) {
-	        sarcasm_flag = !sarcasm_flag;
-	        if(caps_flag) {
-            register_code(KC_CAPS);
-	          unregister_code(KC_CAPS);
-	        }
-	      }
+    case QWERTY:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_QWERTY);
+      }
       return false;
       break;
-    }
-    return true;
+    case COLEMAK:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_COLEMAK);
+      }
+      return false;
+      break;
+    case WORKMAN:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_WORKMAN);
+      }
+      return false;
+      break;
+    case LOWER:
+      if (record->event.pressed) {
+        layer_on(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+      break;
+    case RAISE:
+      if (record->event.pressed) {
+        layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+      break;
+    case BACKLIT:
+      if (record->event.pressed) {
+        register_code(KC_RSFT);
+        #ifdef BACKLIGHT_ENABLE
+          backlight_step();
+        #endif
+        #ifdef __AVR__
+        writePinLow(E6);
+        #endif
+      } else {
+        unregister_code(KC_RSFT);
+        #ifdef __AVR__
+        writePinHigh(E6);
+        #endif
+      }
+      return false;
+      break;
+    case ARROW:
+      if (record->event.pressed) {
+        layer_on(_ARROW)
+      } else {
+        layer_off(_ARROW)
+      }
+      return false;
+      break;
+    case SARCASM:
+	    if(record->event.pressed) {
+	      sarcasm_flag = !sarcasm_flag;
+	      if(caps_flag) {
+          register_code(KC_CAPS);
+	        unregister_code(KC_CAPS);
+	      }
+	    }
+    return false;
+    break;
+  }
+  return true;
 };
 // }}}
 // variables {{{
