@@ -16,7 +16,7 @@
 
 /* VIA specific defines to increase dynamic layer count */
 #define VIA_EEPROM_LAYOUT_OPTIONS_SIZE 3
-#define DYNAMIC_KEYMAP_LAYER_COUNT 5
+#define DYNAMIC_KEYMAP_LAYER_COUNT 6
 
 /* defining an extra row for encoder assignment in VIA */
 #undef MATRIX_ROWS
