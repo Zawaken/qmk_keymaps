@@ -16,6 +16,7 @@
 // }}}
 // includes {{{
 #include QMK_KEYBOARD_H
+#include "common.h"
 // }}}
 // Layers and keycodes {{{
 enum framework_layers {
@@ -38,7 +39,7 @@ enum framework_keycodes {
 };
 // }}}
 // defines {{{
-#define CTL_ESC MT(MOD_LCTL, KC_ESC)
+// #define CTL_ESC MT(MOD_LCTL, KC_ESC)
 // }}}
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {

@@ -8,5 +8,4 @@ Flash script shamelessly stolen and rewritten from [ai212983](https://github.com
 
 
 ## TODO:
-* Fix common Variables/find out why it is not currently working.
 * Lower/Raise on hold, space on tap, does not allow going to the ADJUST layer.

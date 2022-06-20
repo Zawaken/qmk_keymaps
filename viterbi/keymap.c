@@ -1,5 +1,6 @@
 // includes {{{
 #include QMK_KEYBOARD_H
+#include "common.h"
 // }}}
 // layers/defines {{{
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
@@ -11,7 +12,6 @@
 #define _LOWER 2
 #define _RAISE 3
 #define _ADJUST 16
-#define CTL_ESC MT(MOD_LCTL, KC_ESC)
 // }}}
 // custom_keycodes {{{
 enum custom_keycodes {

@@ -16,6 +16,7 @@
 // includes {{{
 #include QMK_KEYBOARD_H
 #include "muse.h"
+#include "common.h"
 // }}}
 // layers and preonic_keycodes {{{
 enum preonic_layers {
@@ -40,7 +41,6 @@ enum preonic_keycodes {
 };
 // }}}
 // defines {{{
-#define CTL_ESC MT(MOD_LCTL, KC_ESC)
 // }}}
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
