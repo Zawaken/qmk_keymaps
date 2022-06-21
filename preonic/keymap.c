@@ -19,26 +19,26 @@
 #include "common.h"
 // }}}
 // layers and preonic_keycodes {{{
-enum preonic_layers {
-  _COLEMAK,
-  _QWERTY,
-  _WORKMAN,
-  _LOWER,
-  _RAISE,
-  _ADJUST,
-  _ARROW
-};
-
-enum preonic_keycodes {
-  COLEMAK = SAFE_RANGE,
-  QWERTY,
-  WORKMAN,
-  LOWER,
-  RAISE,
-  BACKLIT,
-  ARROW,
-  SARCASM
-};
+// enum preonic_layers {
+//   _COLEMAK,
+//   _QWERTY,
+//   _WORKMAN,
+//   _LOWER,
+//   _RAISE,
+//   _ADJUST,
+//   _ARROW
+// };
+//
+// enum preonic_keycodes {
+//   COLEMAK = SAFE_RANGE,
+//   QWERTY,
+//   WORKMAN,
+//   LOWER,
+//   RAISE,
+//   BACKLIT,
+//   ARROW,
+//   SARCASM
+// };
 // }}}
 // defines {{{
 // }}}
@@ -266,9 +266,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case ARROW:
       if (record->event.pressed) {
-        layer_on(_ARROW)
+        layer_on(_ARROW);
       } else {
-        layer_off(_ARROW)
+        layer_off(_ARROW);
       }
       return false;
       break;

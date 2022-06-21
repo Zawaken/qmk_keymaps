@@ -7,21 +7,21 @@
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
-#define _QWERTY 0
-#define _COLEMAK 1
-#define _LOWER 2
-#define _RAISE 3
-#define _ADJUST 16
+// #define _QWERTY 0
+// #define _COLEMAK 1
+// #define _LOWER 2
+// #define _RAISE 3
+// #define _ADJUST 16
 // }}}
 // custom_keycodes {{{
-enum custom_keycodes {
-  COLEMAK = SAFE_RANGE,
-  QWERTY,
-  LOWER,
-  RAISE,
-  ADJUST,
-  SARCASM
-};
+// enum custom_keycodes {
+//   COLEMAK = SAFE_RANGE,
+//   QWERTY,
+//   LOWER,
+//   RAISE,
+//   ADJUST,
+//   SARCASM
+// };
 // }}}
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {

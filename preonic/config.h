@@ -25,6 +25,9 @@
 
 #define MIDI_BASIC
 
+#define COMMON_LAYERS
+#define COMMON_ORTHO_LAYERS
+
 /* enable advanced MIDI features:
    - MIDI notes can be added to the keymap
    - Octave shift and transpose

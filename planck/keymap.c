@@ -22,25 +22,26 @@
 extern keymap_config_t keymap_config;
 // }}}
 // planck_layers & planck_keycodes {{{
-enum planck_layers {
-  _QWERTY,
-  _COLEMAK,
-  _DVORAK,
-  _LOWER,
-  _RAISE,
-  _PLOVER,
-  _ADJUST,
-  _ARROW
-};
-
-enum planck_keycodes {
-  QWERTY = SAFE_RANGE,
-  COLEMAK,
-  DVORAK,
-  PLOVER,
-  BACKLIT,
-  EXT_PLV
-};
+// enum planck_layers {
+//   _QWERTY,
+//   _COLEMAK,
+//   _DVORAK,
+//   _LOWER,
+//   _RAISE,
+//   _PLOVER,
+//   _ADJUST,
+//   _ARROW
+// };
+//
+// enum planck_keycodes {
+//   QWERTY = SAFE_RANGE,
+//   COLEMAK,
+//   DVORAK,
+//   PLOVER,
+//   BACKLIT,
+//   EXT_PLV,
+//   ARROW,
+// };
 // }}}
 // defines {{{
 #define LOWER MO(_LOWER)

@@ -19,24 +19,24 @@
 #include "common.h"
 // }}}
 // Layers and keycodes {{{
-enum framework_layers {
-    _BASE,
-    _QWERTY,
-    _LOWER,
-    _RAISE,
-    _ADJUST,
-    _ARROW,
-};
-
-enum framework_keycodes {
-    BASE = SAFE_RANGE,
-    QWERTY,
-    LOWER,
-    RAISE,
-    ADJUST,
-    ARROW,
-    SARCASM
-};
+// enum framework_layers {
+//     _BASE,
+//     _QWERTY,
+//     _LOWER,
+//     _RAISE,
+//     _ADJUST,
+    // _ARROW,
+// };
+//
+// enum framework_keycodes {
+//     BASE = SAFE_RANGE,
+//     QWERTY,
+//     LOWER,
+//     RAISE,
+//     ADJUST,
+//     ARROW,
+//     SARCASM
+// };
 // }}}
 // defines {{{
 // #define CTL_ESC MT(MOD_LCTL, KC_ESC)
@@ -44,7 +44,7 @@ enum framework_keycodes {
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Colemak {{{
-[_BASE] = framework_via(
+[_COLEMAK] = framework_via(
     KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,       KC_5,    KC_6,   KC_7,       KC_8,    KC_9,    KC_0,    KC_MEDIA_PLAY_PAUSE,
     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,       KC_G,    KC_J,   KC_L,       KC_U,    KC_Y,    KC_SCLN,    KC_BSPC,
     CTL_ESC,  KC_A,    KC_R,    KC_S,    KC_T,       KC_D,    KC_H,   KC_N,       KC_E,    KC_I,    KC_O, KC_QUOT,
@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = framework_via(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, RESET, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,
-    _______, _______, _______, _______, _______, _______, _______, QWERTY, BASE, _______, _______, SARCASM,
+    _______, _______, _______, _______, _______, _______, _______, QWERTY, COLEMAK, _______, _______, SARCASM,
     // _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SARCASM,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, EEP_RST, DEBUG,
@@ -146,9 +146,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
   }
   switch (keycode) {
-    case BASE:
+    case COLEMAK:
       if (record->event.pressed) {
-        set_single_persistent_default_layer(_BASE);
+        set_single_persistent_default_layer(_COLEMAK);
       }
       return false;
       break;
