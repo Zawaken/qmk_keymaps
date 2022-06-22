@@ -19,24 +19,24 @@
 #include "common.h"
 // }}}
 // Layers and keycodes {{{
-// enum framework_layers {
-//     _BASE,
-//     _QWERTY,
-//     _LOWER,
-//     _RAISE,
-//     _ADJUST,
-    // _ARROW,
-// };
-//
-// enum framework_keycodes {
-//     BASE = SAFE_RANGE,
-//     QWERTY,
-//     LOWER,
-//     RAISE,
-//     ADJUST,
-//     ARROW,
-//     SARCASM
-// };
+enum framework_layers {
+    _COLEMAK,
+    _QWERTY,
+    _LOWER,
+    _RAISE,
+    _ADJUST,
+    _ARROW,
+};
+
+enum framework_keycodes {
+    COLEMAK = SAFE_RANGE,
+    QWERTY,
+    LOWER,
+    RAISE,
+    ADJUST,
+    ARROW,
+    SARCASM
+};
 // }}}
 // defines {{{
 // #define CTL_ESC MT(MOD_LCTL, KC_ESC)
