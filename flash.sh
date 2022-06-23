@@ -108,6 +108,12 @@ if test "${1}"; then
       IMAGE_EXTENSION='bin'
       MAKE_SUFFIX=':flash'
       ;;
+    framework-novia)
+      TARGET_KEYBOARD='7c8/framework'
+      MAKE_PREFIX='7c8/framework'
+      IMAGE_EXTENSION='bin'
+      MAKE_SUFFIX=':flash'
+      ;;
     *)
       printf "Layout ${TARGET_LAYOUT} not found in the list, maybe you should add it?\nexiting\n"
       exit 1
