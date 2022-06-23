@@ -108,7 +108,7 @@ if test "${1}"; then
       IMAGE_EXTENSION='bin'
       MAKE_SUFFIX=':flash'
       ;;
-    framework-novia)
+    framework-via)
       TARGET_KEYBOARD='7c8/framework'
       MAKE_PREFIX='7c8/framework'
       IMAGE_EXTENSION='bin'
