@@ -20,7 +20,7 @@
 
 #define COMMON_LAYERS
 #define COMMON_ORTHO_LAYERS
-// #define COMMON_PROCESS_RECORD
+#define COMMON_PROCESS_RECORD
 
 /* defining an extra row for encoder assignment in VIA */
 #undef MATRIX_ROWS

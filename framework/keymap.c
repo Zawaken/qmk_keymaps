@@ -18,29 +18,6 @@
 #include QMK_KEYBOARD_H
 #include "common.h"
 // }}}
-// Layers and keycodes {{{
-// enum framework_layers {
-//     _COLEMAK,
-//     _QWERTY,
-//     _LOWER,
-//     _RAISE,
-//     _ADJUST,
-//     _ARROW,
-// };
-//
-// enum framework_keycodes {
-//     COLEMAK = SAFE_RANGE,
-//     QWERTY,
-//     LOWER,
-//     RAISE,
-//     ADJUST,
-//     ARROW,
-//     SARCASM
-// };
-// }}}
-// defines {{{
-// #define CTL_ESC MT(MOD_LCTL, KC_ESC)
-// }}}
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Colemak {{{
@@ -161,73 +138,3 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return true;
 }
 // }}}
-// Layer switching {{{
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  static bool sarcasm_flag = false;
-  static bool caps_flag = false;
-
-  if(sarcasm_flag) {
-    if(record->event.pressed) {
-      if(keycode != KC_SPC) {
-        // if(rand() % 3 > 0){
-        register_code(KC_CAPS);
-        unregister_code(KC_CAPS);
-        caps_flag = !caps_flag;
-        // }
-      }
-    }
-  }
-  switch (keycode) {
-    case COLEMAK:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_COLEMAK);
-      }
-      return false;
-      break;
-    case QWERTY:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_QWERTY);
-      }
-      return false;
-      break;
-    case LOWER:
-      if (record->event.pressed) {
-        layer_on(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case RAISE:
-      if (record->event.pressed) {
-        layer_on(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        layer_off(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
-    case ARROW:
-      if (record->event.pressed) {
-        layer_on(_ARROW);
-      } else {
-        layer_off(_ARROW);
-      }
-      return false;
-      break;
-    case SARCASM:
-      if(record->event.pressed) {
-        sarcasm_flag = !sarcasm_flag;
-        if(caps_flag) {
-          register_code(KC_CAPS);
-          unregister_code(KC_CAPS);
-        }
-      }
-    return false;
-    break;
-  }
-  return true;
-}; // }}}
