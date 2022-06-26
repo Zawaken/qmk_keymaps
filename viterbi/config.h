@@ -24,7 +24,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
+#define COMMON_LAYERS
 #define COMMON_ORTHO_LAYERS
+#define COMMON_PROCESS_RECORD
 
 #undef DEBOUNCE
 #undef RGBLED_NUM

@@ -18,6 +18,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch(keycode) {
+    //{{{Colemak, Qwerty etc
     case COLEMAK:
       if (record->event.pressed) {
         set_single_persistent_default_layer(_COLEMAK);
@@ -36,6 +37,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case DVORAK:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_DVORAK);
+      }
+      return false;
+      break;
+    // }}}
+    #ifdef COMMON_ORTHO_LAYERS // {{{
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
@@ -56,7 +65,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    #ifdef BACKLIT_ENABLED
+    #endif // }}}
+    case ARROW: // {{{
+      if (record->event.pressed) {
+        layer_on(_ARROW);
+      } else {
+        layer_off(_ARROW);
+      }
+      return false;
+      break; // }}}
+    case SARCASM: // {{{
+      if(record->event.pressed) {
+        sarcasm_flag = !sarcasm_flag;
+        if(caps_flag) {
+          register_code(KC_CAPS);
+          unregister_code(KC_CAPS);
+        }
+      }
+      return false;
+      break; // }}}
+    #ifdef BACKLIT_ENABLED // {{{
     case BACKLIT:
       if (record->event.pressed) {
         register_code(KC_RSFT);
@@ -74,25 +102,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    #endif
-    case ARROW:
+    #endif // }}}
+    #ifdef PLOVER_ENABLED // {{{
+    case PLOVER:
       if (record->event.pressed) {
-        layer_on(_ARROW);
-      } else {
-        layer_off(_ARROW);
-      }
-      return false;
-      break;
-    case SARCASM:
-      if(record->event.pressed) {
-        sarcasm_flag = !sarcasm_flag;
-        if(caps_flag) {
-          register_code(KC_CAPS);
-          unregister_code(KC_CAPS);
+        #ifdef AUDIO_ENABLE
+          stop_all_notes();
+          PLAY_SONG(plover_song);
+        #endif
+        layer_off(_RAISE);
+        layer_off(_LOWER);
+        layer_off(_ADJUST);
+        layer_on(_PLOVER);
+        if (!eeconfig_is_enabled()) {
+            eeconfig_init();
         }
+        keymap_config.raw = eeconfig_read_keymap();
+        keymap_config.nkro = 1;
+        eeconfig_update_keymap(keymap_config.raw);
       }
       return false;
       break;
+    case EXT_PLV:
+      if (record->event.pressed) {
+        #ifdef AUDIO_ENABLE
+          PLAY_SONG(plover_gb_song);
+        #endif
+        layer_off(_PLOVER);
+      }
+      return false;
+      break;
+    #endif // }}}
   }
   return true;
 };

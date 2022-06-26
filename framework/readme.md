@@ -1,5 +1,5 @@
-# Zawaken's 5x12 layout - my planck layout + number row
-### Qwerty
+# Zawaken's 5x12 ortho layout - my planck layout + number row
+### Colemak
 ```
 ,-----------------------------------------------------------------------------------.
 |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |  \   |

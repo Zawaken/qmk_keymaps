@@ -1,15 +1,15 @@
-# Zawaken's WIP Scuffed Planck layout
+# Zawaken's Scuffed Planck layout
 
-### Qwerty
+### Colemak
 ```
  ,-----------------------------------------------------------------------------------.
- | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ | Tab  |   Q  |   W  |   F  |   P  |   G  |   J  |   L  |   U  |   Y  |   ;  | Bksp |
  |------+------+------+------+------+------+------+------+------+------+------+------|
- |CtlEsc|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ |CtlEsc|   A  |   R  |   S  |   T  |   D  |   H  |   N  |   E  |   I  |   O  |  "   |
  |------+------+------+------+------+------+------+------+------+------+------+------|
- | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |SFTENT|
+ | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |SFTENT|
  |------+------+------+------+------+------+------+------+------+------+------+------|
- | ARROW| AltGr| Alt  | GUI  |LWRSPC|Space | Space|RAISPC| Left | Down |  Up  |Right |
+ | ARROW| AltGr| Alt  | GUI  |Lower |Space | Bksp |Raise | Left | Down |  Up  |Right |
  `-----------------------------------------------------------------------------------'
 ```
 
