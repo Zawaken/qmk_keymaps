@@ -11,11 +11,11 @@ enum LAYERS {
   _QWERTY,
   _DVORAK,
   _WORKMAN,
-#if defined(COMMON_ORTHO_LAYERS)
+  #if defined(COMMON_ORTHO_LAYERS)
   _LOWER,
   _RAISE,
   _ADJUST,
-#endif
+  #endif
   _PLOVER,
   _ARROW,
 };
@@ -25,11 +25,11 @@ enum KEYCODES {
   QWERTY,
   DVORAK,
   WORKMAN,
-#if defined(COMMON_ORTHO_LAYERS)
+  #if defined(COMMON_ORTHO_LAYERS)
   LOWER,
   RAISE,
   ADJUST,
-#endif
+  #endif
   ARROW,
   PLOVER,
   BACKLIT,

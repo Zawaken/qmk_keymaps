@@ -16,7 +16,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
   }
-
+#ifdef COMMON_LAYERS
   switch(keycode) {
     //{{{Colemak, Qwerty etc
     case COLEMAK:
@@ -43,7 +43,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case ARROW: // {{{
+      if (record->event.pressed) {
+        layer_on(_ARROW);
+      } else {
+        layer_off(_ARROW);
+      }
+      return false;
+      break; // }}}
+    case SARCASM: // {{{
+      if(record->event.pressed) {
+        sarcasm_flag = !sarcasm_flag;
+        if(caps_flag) {
+          register_code(KC_CAPS);
+          unregister_code(KC_CAPS);
+        }
+      }
+      return false;
+      break; // }}}
+    #endif
     // }}}
+
     #ifdef COMMON_ORTHO_LAYERS // {{{
     case LOWER:
       if (record->event.pressed) {
@@ -66,24 +86,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
       break;
     #endif // }}}
-    case ARROW: // {{{
-      if (record->event.pressed) {
-        layer_on(_ARROW);
-      } else {
-        layer_off(_ARROW);
-      }
-      return false;
-      break; // }}}
-    case SARCASM: // {{{
-      if(record->event.pressed) {
-        sarcasm_flag = !sarcasm_flag;
-        if(caps_flag) {
-          register_code(KC_CAPS);
-          unregister_code(KC_CAPS);
-        }
-      }
-      return false;
-      break; // }}}
+
     #ifdef BACKLIT_ENABLED // {{{
     case BACKLIT:
       if (record->event.pressed) {

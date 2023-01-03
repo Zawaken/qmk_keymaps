@@ -114,6 +114,12 @@ if test "${1}"; then
       IMAGE_EXTENSION='bin'
       MAKE_SUFFIX=':flash'
       ;;
+    lulu)
+      TARGET_KEYBOARD='boardsource/lulu'
+      MAKE_PREFIX='boardsource/lulu/rp2040'
+      IMAGE_EXTENSION='bin'
+      MAKE_SUFFIX=':flash'
+      ;;
     *)
       printf "Layout ${TARGET_LAYOUT} not found in the list, maybe you should add it?\nexiting\n"
       exit 1
@@ -141,7 +147,7 @@ mkdir -p $QMK_FIRMWARE/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}
 
 # Copy keymap files for the specified keymap
 printf "\n\nCopying keymap \"${MAKE_PREFIX}:${QMK_USER}\" \n\n"
-rsync -avh $1/{config.h,keymap.c,rules.mk} $QMK_FIRMWARE/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}/ # >/dev/null 2>&1
+rsync -avh keyboards/$1/{config.h,keymap.c,rules.mk} $QMK_FIRMWARE/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}/ # >/dev/null 2>&1
 
 # Copy everything in the common directory into users/QMK_USER
 printf "Copying ./common to \"./${QMK_FIRMWARE}/users/${QMK_USER}\"\n\n"
@@ -154,6 +160,7 @@ make --directory=qmk_firmware git-submodule >/dev/null 2>&1
 rm -rf $QMK_FIRMWARE/${TARGET_LAYOUT}_${QMK_USER}.${IMAGE_EXTENSION}
 
 # Build/flash
+# cd "${QMK_FIRMWARE}"
 if $build_only; then
   printf 'build_only specified, skipping flash\n===================================================\n\n'
   ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}
