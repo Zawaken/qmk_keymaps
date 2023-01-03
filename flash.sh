@@ -19,12 +19,13 @@ Keyboards:
   viterbi
   nyquist
   vitamins_included
-  framework\n'
+  framework
+  lulu\n'
 }
 # }}}
 # variables # {{{
 build_only='false'
-QMK_FIRMWARE='qmk_firmware'
+FW_FOLDER='qmk_firmware'
 QMK_USER='zawaken'
 eval LAST_ARG=\${$#}
 TARGET_LAYOUT=${LAST_ARG%/}
@@ -37,18 +38,10 @@ while true; do
       show_help
       exit
       ;;
-    -v|--verbose)
-      verbose=1
-      ;;
-    -u|--user)
-      QMK_USER="${2}"
-      ;;
-    -b|--build_only)
-      build_only=true
-      ;;
-    -p|--podman)
-      export RUNTIME="podman"
-      ;;
+    -v|--verbose) verbose=1;;
+    -u|--user) QMK_USER="${2}";;
+    -b|--build_only) build_only=true;;
+    -p|--podman) export RUNTIME="podman";;
     -*)
       show_help
       printf "\nERR: Argument \"${1}\" does not exist\n"
@@ -65,7 +58,7 @@ if test "${verbose}" -eq 1; then
   set -o xtrace
 fi
 
-if test "${1}"; then
+if test "${1}"; then # {{{
   case "${TARGET_LAYOUT}" in
     planck)
       TARGET_KEYBOARD='planck'
@@ -129,43 +122,36 @@ else
   show_help
   printf "\nERR: No arguments supplied.\n"
   exit
-fi
+fi #}}}
 
 # preonic_zawaken.bin
 BINARY_NAME="${TARGET_LAYOUT}_${QMK_USER}.${IMAGE_EXTENSION}"
 
 printf "\n===================================================
-Using firmware folder ${QMK_FIRMWARE}
-Layout: ${TARGET_LAYOUT}
-Building binary '${BINARY_NAME}'"
+KEYBOARD:         \"${TARGET_KEYBOARD}\"
+LAYOUT:           \"${TARGET_LAYOUT}\"
+BINARY:           \"${BINARY_NAME}\"
+FIRMWARE_FOLDER:  \"${FW_FOLDER}\"
+==================================================="
 
-# Remove .build folder
-rm -rf $QMK_FIRMWARE/.build
-
-# Create TARGET_KEYBOARD/keymaps/QMK_USER folder
-mkdir -p $QMK_FIRMWARE/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}
-
-# Copy keymap files for the specified keymap
-printf "\n\nCopying keymap \"${MAKE_PREFIX}:${QMK_USER}\" \n\n"
-rsync -avh keyboards/$1/{config.h,keymap.c,rules.mk} $QMK_FIRMWARE/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}/ # >/dev/null 2>&1
-
-# Copy everything in the common directory into users/QMK_USER
-printf "Copying ./common to \"./${QMK_FIRMWARE}/users/${QMK_USER}\"\n\n"
-rsync -avh --delete common/ $QMK_FIRMWARE/users/$QMK_USER/ >/dev/null 2>&1
-
-# Submodule initialization
-make --directory=qmk_firmware git-submodule >/dev/null 2>&1
-
-# Remove previous binary
-rm -rf $QMK_FIRMWARE/${TARGET_LAYOUT}_${QMK_USER}.${IMAGE_EXTENSION}
+rm -rf $FW_FOLDER/.build # Remove .build folder
+mkdir -p $FW_FOLDER/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER} # Create TARGET_KEYBOARD/keymaps/QMK_USER folder
+printf "\n\nCopying keymap \"${MAKE_PREFIX}:${QMK_USER}\" \n\n" # Copy keymap files for the specified keymap
+rsync -avh keyboards/$1/{config.h,keymap.c,rules.mk} $FW_FOLDER/keyboards/$TARGET_KEYBOARD/keymaps/${QMK_USER}/ # >/dev/null 2>&1
+printf "Copying ./common to \"./${FW_FOLDER}/users/${QMK_USER}\"\n\n"
+rsync -avh --delete common/ $FW_FOLDER/users/$QMK_USER/ >/dev/null 2>&1 # Copy everything in the common directory into users/QMK_USER
+make --directory=qmk_firmware git-submodule >/dev/null 2>&1 # Submodule initialization
+rm -rf $FW_FOLDER/${TARGET_LAYOUT}_${QMK_USER}.${IMAGE_EXTENSION} # Remove previous binary
 
 # Build/flash
-# cd "${QMK_FIRMWARE}"
+cd "${FW_FOLDER}"
+printf "${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\n"
 if $build_only; then
   printf 'build_only specified, skipping flash\n===================================================\n\n'
   ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}
   exit
 else
   printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
-  ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+  #./container_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+  ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
 fi
