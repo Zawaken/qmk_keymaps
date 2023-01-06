@@ -144,7 +144,7 @@ make --directory=qmk_firmware git-submodule >/dev/null 2>&1 # Submodule initiali
 rm -rf $FW_FOLDER/${TARGET_LAYOUT}_${QMK_USER}.${IMAGE_EXTENSION} # Remove previous binary
 
 # Build/flash
-cd "${FW_FOLDER}"
+# cd "${FW_FOLDER}"
 printf "${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\n"
 if $build_only; then
   printf 'build_only specified, skipping flash\n===================================================\n\n'
@@ -152,6 +152,6 @@ if $build_only; then
   exit
 else
   printf "building and flashing \"${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}\"\n===================================================\n\n"
-  #./container_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
-  ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+  ./container_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
+  # ./util/docker_build.sh ${MAKE_PREFIX}:${QMK_USER}${MAKE_SUFFIX}
 fi
