@@ -6,13 +6,17 @@
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   static bool sarcasm_flag = false;
   static bool caps_flag = false;
+  static int same_case = 0;
 
-  if(sarcasm_flag) {
-    if(record->event.pressed) {
-      if(keycode != KC_SPC) {
+  if(sarcasm_flag && record->event.pressed) {
+    if(keycode != KC_SPC) {
+      if(rand() % 2 == 1 || same_case >= 1) {
         register_code(KC_CAPS);
         unregister_code(KC_CAPS);
         caps_flag = !caps_flag;
+        same_case = 0;
+      } else {
+        same_case++;
       }
     }
   }
