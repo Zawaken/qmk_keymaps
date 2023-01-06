@@ -17,6 +17,7 @@
 // includes {{{
 #include QMK_KEYBOARD_H
 #include "common.h"
+// #include "encoder.h"
 // }}}
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -59,11 +60,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Adjust {{{
 [_ADJUST] = LAYOUT_ortho_5x12(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, QK_BOOT, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,
+    _______, QK_BOOT, DB_TOGG, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,
     _______, _______, _______, _______, _______, _______, _______, QWERTY, COLEMAK, _______, _______, SARCASM,
-    // _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SARCASM,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, DB_TOGG
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 ),
 // }}}
 // ARROW {{{
@@ -88,53 +88,14 @@ void matrix_scan_user(void) {
 }
 // }}}
 // encoder {{{
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-     switch (get_highest_layer(layer_state)) {
-      case _COLEMAK:
-        if (clockwise) {
-          tap_code(KC_AUDIO_VOL_UP);
-        } else {
-          tap_code(KC_AUDIO_VOL_DOWN);
-        }
-        break;
-      case _QWERTY:
-        if (clockwise) {
-          tap_code16(KC_AUDIO_VOL_UP);
-        } else {
-          tap_code16(KC_AUDIO_VOL_DOWN);
-        }
-        break;
-      case _LOWER:
-        if (clockwise) {
-          tap_code16(LCTL(KC_TAB));
-        } else {
-          tap_code16(LCTL(LSFT(KC_TAB)));
-        }
-        break;
-      case _RAISE:
-        if (clockwise) {
-          tap_code16(LCTL(KC_RIGHT));
-        } else {
-          tap_code16(LCTL(KC_LEFT));
-        }
-        break;
-      case _ADJUST:
-        if (clockwise) {
-          tap_code16(LCTL(KC_Y));
-        } else {
-          tap_code16(LCTL(KC_Z));
-        }
-        break;
-      case _ARROW:
-        if (clockwise) {
-          tap_code(KC_MS_WH_RIGHT);
-        } else {
-          tap_code(KC_MS_WH_LEFT);
-        }
-        break;
-    }
-    }
-    return true;
-}
+#ifdef ENCODER_MAP_ENABLE
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+  [_COLEMAK]  = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+  [_QWERTY]   = { ENCODER_CCW_CW(KC_VOLD,  KC_VOLU)  },
+  [_LOWER]    = { ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB)) },
+  [_RAISE]    = { ENCODER_CCW_CW(LCTL(KC_LEFT), LCTL(KC_RIGHT))  },
+  [_ADJUST]   = { ENCODER_CCW_CW(LCTL(KC_Z), LCTL(KC_Y))  },
+  [_ARROW]    = { ENCODER_CCW_CW(KC_MS_WH_LEFT, KC_MS_WH_RIGHT)  }
+};
+#endif
 // }}}

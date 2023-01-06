@@ -16,7 +16,7 @@
 // }}}
 // includes {{{
 #include QMK_KEYBOARD_H
-#include "common.h"
+// #include "common.h"
 // }}}
 // Layers and keycodes {{{
 enum framework_layers {
@@ -39,7 +39,7 @@ enum framework_keycodes {
 };
 // }}}
 // defines {{{
-// #define CTL_ESC MT(MOD_LCTL, KC_ESC)
+#define CTL_ESC MT(MOD_LCTL, KC_ESC)
 // }}}
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -86,11 +86,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // Adjust {{{
 [_ADJUST] = framework_via(
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, RESET, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,
+    _______, QK_BOOT, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,
     _______, _______, _______, _______, _______, _______, _______, QWERTY, COLEMAK, _______, _______, SARCASM,
     // _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, SARCASM,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, EEP_RST, DEBUG,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, DB_TOGG,
     C(KC_Z), C(KC_Y)
 ),
 // }}}
@@ -117,6 +117,7 @@ void matrix_scan_user(void) {
 }
 // }}}
 // encoder {{{
+#ifndef ENCODER_MAP_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
     uint8_t layer = get_highest_layer(layer_state);
     if (index == 0) {
@@ -128,6 +129,17 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
     return true;
 }
+#endif
+#ifdef ENCODER_MAP_ENABLE
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+  [_COLEMAK]  = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+  [_QWERTY]   = { ENCODER_CCW_CW(KC_VOLD,  KC_VOLU)  },
+  [_LOWER]    = { ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB)) },
+  [_RAISE]    = { ENCODER_CCW_CW(LCTL(KC_LEFT), LCTL(KC_RIGHT))  },
+  [_ADJUST]   = { ENCODER_CCW_CW(LCTL(KC_Z), LCTL(KC_Y))  },
+  [_ARROW]    = { ENCODER_CCW_CW(KC_MS_WH_LEFT, KC_MS_WH_RIGHT)  }
+};
+#endif
 // }}}
 // Layer switching {{{
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
