@@ -110,7 +110,7 @@ if test "${1}"; then # {{{
     lulu)
       TARGET_KEYBOARD='boardsource/lulu'
       MAKE_PREFIX='boardsource/lulu/rp2040'
-      IMAGE_EXTENSION='bin'
+      IMAGE_EXTENSION='uf2'
       MAKE_SUFFIX=':flash'
       ;;
     *)
