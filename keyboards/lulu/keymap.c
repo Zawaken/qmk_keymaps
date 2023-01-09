@@ -1,10 +1,8 @@
-// Copyright 2022 Cole Smith <cole@boadsource.xyz>
-// SPDX-License-Identifier: GPL-2.0-or-later
-
+// Includes {{{
 #include QMK_KEYBOARD_H
 #include "common.h"
-
-// layers {{{
+// }}}
+// Layers {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* COLEMAK {{{
