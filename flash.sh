@@ -91,7 +91,7 @@ if test "${1}"; then # {{{
       IMAGE_EXTENSION='hex'
       MAKE_SUFFIX='dfu'
       ;;
-    vitamins_included)
+    lpvi)
       TARGET_KEYBOARD='vitamins_included'
       MAKE_PREFIX='vitamins_included/rev2'
       IMAGE_EXTENSION='hex'
