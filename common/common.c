@@ -1,8 +1,11 @@
 #include "common.h"
 
 #include "quantum.h"
+#ifdef OLED_ENABLE
+#include "oled.h"
+#endif
 
-#ifdef COMMON_PROCESS_RECORD
+#ifdef COMMON_PROCESS_RECORD // {{{
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   static bool sarcasm_flag = false;
   static bool caps_flag = false;
@@ -20,9 +23,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
   }
-#ifdef COMMON_LAYERS
+#ifdef COMMON_LAYERS // {{{
   switch(keycode) {
-    //{{{Colemak, Qwerty etc
     case COLEMAK:
       if (record->event.pressed) {
         set_single_persistent_default_layer(_COLEMAK);
@@ -65,8 +67,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break; // }}}
-    #endif
-    // }}}
+    #endif // }}}
 
     #ifdef COMMON_ORTHO_LAYERS // {{{
     case LOWER:
@@ -143,4 +144,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 };
-#endif
+#endif // }}}
