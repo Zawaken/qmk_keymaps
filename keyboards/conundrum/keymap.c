@@ -1,30 +1,9 @@
+// includes {{{
 #include QMK_KEYBOARD_H
 
 #include "quantum.h"
 #include "common.h"
-
-enum layers {
-  _COLEMAK,
-  _QWERTY,
-  _DVORAK,
-  _LOWER,
-  _RAISE,
-  _ADJUST,
-  _ARROW
-};
-
-enum keycodes {
-  COLEMAK = SAFE_RANGE,
-  QWERTY,
-  DVORAK,
-  ARROW
-};
-
-
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
-#define CTL_ESC MT(MOD_LCTL, KC_ESC)
-
+// }}}
 // keymaps {{{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Qwerty {{{
@@ -148,31 +127,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // }}}
 
 }; // }}}
-
-uint32_t layer_state_set_user(uint32_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_QWERTY);
-      }
-      return false;
-      break;
-    case COLEMAK:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_COLEMAK);
-      }
-      return false;
-      break;
-    case DVORAK:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_DVORAK);
-      }
-      return false;
-      break;
-  }
-  return true;
-}
