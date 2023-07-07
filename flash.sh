@@ -2,6 +2,8 @@
 # variables # {{{
 build_only='false'
 FW_FOLDER='qmk_firmware'
+# BUILD_SCRIPT='./container_build.sh'
+BUILD_SCRIPT='./util/docker_build.sh'
 QMK_USER="${USER}"
 eval LAST_ARG=\${$#}
 TARGET_LAYOUT=${LAST_ARG%/}
@@ -115,6 +117,12 @@ if test "${1}"; then # {{{
       IMAGE_EXTENSION='uf2'
       MAKE_SUFFIX='flash'
       ;;
+    conundrum)
+      TARGET_KEYBOARD='thock/conundrum'
+      MAKE_PREFIX='thock/conundrum'
+      IMAGE_EXTENSION='uf2'
+      MAKE_SUFFIX='flash'
+      ;;
     *)
       printf "Layout ${TARGET_LAYOUT} not found in the list, maybe you should add it?\nexiting\n"
       exit 1
@@ -151,6 +159,23 @@ fw_lock() { # {{{
   fi
 } # }}}
 
+conundrum_build() {
+  FW_FOLDER ='thockqmk'
+  cp -r "${KEYMAP_DIR}" "${FW_KEYMAP_DIR}"
+  cd thockqmk
+  RUNTIME=${RUNTIME} ./build-conundrum.sh "${QMK_USER}:uf2"
+}
+get_make_command
+
+if [ $TARGET_LAYOUT == "conundrum" ]; then
+  FW_FOLDER="thockqmk"
+  BUILD_SCRIPT="./build-conundrum.sh"
+  MAKE_COMMAND="${QMK_USER}:uf2"
+  export keymap="${QMK_USER}:uf2"
+  # conundrum_build
+  # exit 0
+fi
+
 # preonic_zawaken.bin
 BINARY_NAME="$(printf "${MAKE_PREFIX}" | sed -e 's/\//_/g')_${QMK_USER}.${IMAGE_EXTENSION}"
 KEYMAP_DIR="keyboards/${TARGET_LAYOUT}"
@@ -158,7 +183,6 @@ FW_KEYMAPS_DIR="${FW_FOLDER}/keyboards/${TARGET_KEYBOARD}/keymaps"
 FW_KEYMAP_DIR="${FW_KEYMAPS_DIR}/${QMK_USER}"
 FW_COMMON_DIR="${FW_FOLDER}/users/${QMK_USER}"
 
-get_make_command
 printf "\n===================================================
 KEYBOARD:         \"${TARGET_KEYBOARD}\"
 LAYOUT:           \"${TARGET_LAYOUT}\"
@@ -176,6 +200,7 @@ rm -rf  "${FW_FOLDER}/.build" \
         "${FW_KEYMAP_DIR}" \
         "${FW_COMMON_DIR}"
 mkdir -p "${FW_KEYMAPS_DIR}" # Create TARGET_KEYBOARD/keymaps/ folder
+mkdir -p "${FW_FOLDER}/.build"
 cp -r "${KEYMAP_DIR}" "${FW_KEYMAP_DIR}"
 cp -r common "${FW_COMMON_DIR}"
 # rsync -avh ${KEYMAP_DIR}/{config.h,keymap.c,rules.mk} "${FW_KEYMAP_DIR}" >/dev/null 2>&1
@@ -187,7 +212,7 @@ rm -rf "${FW_FOLDER}/${BINARY_NAME}"
 case $RUNTIME in
   # TODO: make the flash script work with util/docker_build.sh from qmk_firmware
   # podman|docker) RUNTIME="${RUNTIME}" ./util/docker_build.sh ${MAKE_COMMAND};;
-  podman|docker) RUNTIME="${RUNTIME}" ./container_build.sh ${MAKE_COMMAND};;
+  podman|docker)cd "${FW_FOLDER}";  RUNTIME="${RUNTIME}" "${BUILD_SCRIPT}" ${MAKE_COMMAND};;
   local) ;;
 esac
 } # }}}

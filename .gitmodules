@@ -5,3 +5,4 @@
 [submodule "thockqmk"]
 	path = thockqmk
 	url = https://github.com/thockco/qmk
+  ignore = dirty

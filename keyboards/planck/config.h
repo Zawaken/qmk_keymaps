@@ -25,6 +25,7 @@
 
 #define COMMON_LAYERS
 #define COMMON_ORTHO_LAYERS
+#define COMMON_PROCESS_RECORD
 
 /* enable advanced MIDI features:
    - MIDI notes can be added to the keymap
