@@ -123,6 +123,10 @@ if test "${1}"; then # {{{
       IMAGE_EXTENSION='uf2'
       MAKE_SUFFIX='flash'
       ;;
+    completion)
+      echo "planck preonic m60-a viterbi nyquist lpvi framework framework-via lulu conundrum"
+      exit 0
+      ;;
     *)
       printf "Layout ${TARGET_LAYOUT} not found in the list, maybe you should add it?\nexiting\n"
       exit 1
