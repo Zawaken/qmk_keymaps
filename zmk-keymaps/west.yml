@@ -11,4 +11,4 @@ manifest:
       remote: petejohanson
       revision: main
   self:
-    path: zmk
+    path: zmk-keymaps
