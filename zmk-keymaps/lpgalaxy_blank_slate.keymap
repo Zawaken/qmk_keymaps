@@ -21,6 +21,9 @@
 #define LWR_L 4
 #define RSE_L 5
 
+&soft_off {
+    hold-time-ms = <1000>;
+};
 // Using layer taps on thumbs, having quick tap as well helps w/ repeating space/backspace
 &lt { quick_tap_ms = <200>; };
 
@@ -135,7 +138,7 @@
         sym_layer {
             label = "Sym";
             bindings = <
-&trans     &bootloader   &kp AMPS   &kp STAR    &kp LPAR     &kp RBRC     &trans     &trans    &trans       &trans       &trans     &bootloader
+&soft_off  &bootloader   &kp AMPS   &kp STAR    &kp LPAR     &kp RBRC     &trans     &trans    &trans       &trans       &trans     &bootloader
 &trans     &kp COLON     &kp DLLR   &kp PRCNT   &kp CARET    &kp PLUS     &trans     &trans    &trans       &trans       &trans     &trans
 &trans     &kp TILDE     &kp EXCL   &kp AT      &kp HASH     &kp PIPE     &trans     &trans    &trans       &trans       &trans     &trans
 #ifdef TBLE_DUAL_2U
@@ -151,8 +154,8 @@
         lwr_layer {
             label = "Lwr";
             bindings = <
-&trans    &kp EXCL  &kp AT    &kp HASH  &kp DLLR  &kp PRCNT &kp CARET &kp AMPS  &kp ASTRK &kp LPAR  &kp RPAR  &trans
-&trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &kp PLUS  &kp LBRC  &kp RBRC  &kp SQT
+&kp TILDE &kp EXCL  &kp AT    &kp HASH  &kp DLLR  &kp PRCNT &kp CARET &kp AMPS  &kp ASTRK &kp LPAR  &kp RPAR  &trans
+&trans    &trans    &trans    &trans    &trans    &trans    &trans    &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC  &kp PIPE
 &kp DEL   &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans
 &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans
             >;
@@ -161,10 +164,10 @@
         rse_layer {
             label = "Rse";
             bindings = <
-&trans    &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7    &kp N8    &kp N9       &kp N0          &trans
-&trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &kp EQUAL &kp LBKT     &kp RBKT        &trans
-&trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans       &trans          &trans
-&trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &kp K_PP  &kp C_VOL_UP &kp C_VOL_DN    &kp C_NEXT
+&kp GRAVE &kp N1    &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7    &kp N8    &kp N9       &kp N0          &trans
+&trans    &trans    &trans    &trans    &trans    &trans    &trans    &kp MINUS &kp EQUAL &kp LBKT     &kp RBKT        &kp BSLH
+&trans    &trans    &trans    &trans    &trans    &trans    &trans    &kp NUHS  &kp NUBS  &trans       &trans          &trans
+&trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &kp K_PP  &kp C_VOL_DN &kp C_VOL_UP    &kp C_NEXT
             >;
         };
 
