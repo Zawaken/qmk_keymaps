@@ -7,8 +7,12 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: abcde413a111
       import: app/west.yml
+    # - name: zmk
+    #   remote: petejohanson
+    #   revision: features/soft-off-take-2
+    #   import: app/west.yml
     - name: blank-slate-zmk-module
       remote: petejohanson
       revision: main
