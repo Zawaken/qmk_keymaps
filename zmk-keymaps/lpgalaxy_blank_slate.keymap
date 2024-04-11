@@ -61,7 +61,7 @@
         compatible = "zmk,conditional-layers";
         tri_layer {
             if-layers = <LWR_L RSE_L>;
-            then-layer = <>;
+            then-layer = <SYM_L>;
         };
     };
 // Conditional layer only when we have less thumb keys
