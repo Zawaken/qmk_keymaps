@@ -21,9 +21,11 @@
 #define LWR_L 4
 #define RSE_L 5
 
-&soft_off {
-    hold-time-ms = <1000>;
-};
+// TODO: figure out how to make this work
+/* &soft_off { */
+/*     hold-time-ms = <1000>; */
+/* }; */
+
 // Using layer taps on thumbs, having quick tap as well helps w/ repeating space/backspace
 &lt { quick_tap_ms = <200>; };
 
