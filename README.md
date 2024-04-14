@@ -9,3 +9,13 @@ Flash script shamelessly stolen and rewritten from [ai212983](https://github.com
 
 ## TODO:
 * Lower/Raise on hold, space on tap, does not allow going to the ADJUST layer.
+
+
+## Building/flashing zmk keyboards
+```sh
+nix develop # Takes a while, because Zephyr-sdk is huuge, when in the nix develop shell, continue
+west init -l zmk-keymaps
+west update
+west zephyr-export
+west build -p -s "$(pwd)/zmk/app" -b "lpgalaxy_blank_slate" -- -DZMK_CONFIG="$(pwd)/zmk-keymaps"
+```

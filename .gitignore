@@ -4,5 +4,11 @@
 *.uf2
 .vscode
 .ccls-cache/*
+.west
+blank-slate-zmk-module
+build
+modules
+zmk
+zephyr
 
 zawaken/
