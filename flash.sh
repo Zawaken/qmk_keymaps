@@ -123,8 +123,14 @@ if test "${1}"; then # {{{
       IMAGE_EXTENSION='uf2'
       MAKE_SUFFIX='flash'
       ;;
+    air40)
+      TARGET_KEYBOARD='ymdk/ymd40/air40'
+      MAKE_PREFIX="$TARGET_KEYBOARD"
+      IMAGE_EXTENSION='hex'
+      MAKE_SUFFIX='flash'
+      ;;
     completion)
-      echo "planck preonic m60-a viterbi nyquist lpvi framework framework-via lulu conundrum"
+      echo "planck preonic m60-a viterbi nyquist lpvi framework framework-via lulu conundrum air40"
       exit 0
       ;;
     *)
@@ -200,16 +206,16 @@ MAKE_COMMAND:     \"${MAKE_COMMAND}\"
 
 main () { # {{{
 make --directory="${FW_FOLDER}" git-submodule >/dev/null 2>&1 # Submodule initialization
-rm -rf  "${FW_FOLDER}/.build" \
-        "${FW_KEYMAP_DIR}" \
-        "${FW_COMMON_DIR}"
+rm -rf  "${FW_FOLDER:?}/.build" \
+        "${FW_KEYMAP_DIR:?}" \
+        "${FW_COMMON_DIR:?}"
 mkdir -p "${FW_KEYMAPS_DIR}" # Create TARGET_KEYBOARD/keymaps/ folder
 mkdir -p "${FW_FOLDER}/.build"
 cp -r "${KEYMAP_DIR}" "${FW_KEYMAP_DIR}"
 cp -r common "${FW_COMMON_DIR}"
 # rsync -avh ${KEYMAP_DIR}/{config.h,keymap.c,rules.mk} "${FW_KEYMAP_DIR}" >/dev/null 2>&1
 # rsync -avh --delete common/ ${FW_FOLDER}/users/${QMK_USER}/ >/dev/null 2>&1 # Copy everything in the common directory into users/QMK_USER
-rm -rf "${FW_FOLDER}/${BINARY_NAME}"
+rm -rf "${FW_FOLDER:?}/${BINARY_NAME}"
 
 # Build/flash
 # cd "${FW_FOLDER}"

@@ -4,6 +4,7 @@
 *.uf2
 .vscode
 .ccls-cache/*
+.cache
 .west
 blank-slate-zmk-module
 build
