@@ -12,8 +12,6 @@
 #define COLEMAK_BASE 1
 
 #define TBLE_ORTHO   1
-// #define TBLE_MIT     1
-// #define TBLE_DUAL_2U 1
 
 #define NAV_L 1
 #define NUM_L 2
@@ -142,7 +140,7 @@
             bindings = <
 &trans     &bootloader   &kp AMPS   &kp STAR    &kp LPAR     &kp RBRC     &trans     &trans    &trans       &trans       &trans     &bootloader
 &trans     &kp F1        &kp F2     &kp F3      &kp F4       &kp F5       &kp F6     &trans    &trans       &trans       &trans     &trans
-&trans     &kp F7        &kp F8     &kp F9      &kp F10      &kp F11      &kp F12    &trans    &trans       &trans       &trans     &trans
+&trans     &kp F7        &kp F8     &kp F9      &kp F10      &kp F11      &kp F12    &trans    &trans       &trans       &kp F20    &trans
 #ifdef TBLE_DUAL_2U
 &trans     &trans        &trans     &kp RPAR                &trans                    &trans       &trans         &trans &trans &trans
 #elif defined(TBLE_MIT)
@@ -157,8 +155,8 @@
             label = "Lwr";
             bindings = <
 &kp TILDE &kp EXCL  &kp AT    &kp HASH  &kp DLLR  &kp PRCNT &kp CARET &kp AMPS     &kp ASTRK    &kp LPAR  &kp RPAR  &trans
-&trans    &trans    &trans    &trans    &trans    &trans    &trans    &kp UNDER    &kp PLUS     &kp LBRC  &kp RBRC  &kp PIPE
-&kp DEL   &trans    &trans    &trans    &trans    &trans    &trans    &kp LS(NUBS) &kp LS(NUBS) &trans    &trans    &trans
+&trans    &kp F1    &kp F2    &kp F3    &kp F4    &kp F5    &kp F6    &kp UNDER    &kp PLUS     &kp LBRC  &kp RBRC  &kp PIPE
+&kp DEL   &kp F7    &kp F8    &kp F9    &kp F10   &kp F11   &kp F12   &kp LS(NUBS) &kp LS(NUBS) &trans    &trans    &trans
 &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans       &trans       &trans    &trans    &trans
             >;
         };
