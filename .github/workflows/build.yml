@@ -1,4 +1,14 @@
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    paths:
+    - 'zmk-keymaps/**'
+    - '.github/workflows/**'
+  pull_request:
+    paths:
+    - 'zmk-keymaps/**'
+    - '.github/workflows/**'
+  workflow_dispatch:
+
 
 jobs:
   build:
