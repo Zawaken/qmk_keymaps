@@ -12,6 +12,7 @@ Flash script shamelessly stolen and rewritten from [ai212983](https://github.com
 
 
 ## Building/flashing zmk keyboards
+Requires a working nix install
 ```sh
 nix develop # Takes a while, because Zephyr-sdk is huuge, when in the nix develop shell, continue
 west init -l zmk-keymaps
