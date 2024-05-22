@@ -141,16 +141,10 @@ fw_lock() { # {{{
   )
 } # }}}
 
-conundrum_build() { # {{{
-  FW_FOLDER='thockqmk'
-  cp -r "${KEYMAP_DIR}" "${FW_KEYMAP_DIR}"
-  cd thockqmk
-  RUNTIME=${RUNTIME} ./build-conundrum.sh "${QMK_USER}:uf2"
-}
 get_make_command
 
 if [ "$TARGET_LAYOUT" == "conundrum" ]; then
-  FW_REPO="https://github.comf/thockco/qmk.git"
+  FW_REPO="https://github.com/zawaken/thockqmk.git"
   FW_FOLDER="thockqmk"
   BUILD_SCRIPT="./build-conundrum.sh"
   MAKE_COMMAND="${QMK_USER}:uf2"
