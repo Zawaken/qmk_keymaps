@@ -131,14 +131,12 @@ fw_lock() { # {{{
   if test -f "${FW_LOCK_DIR}/fw.lock"; then
     FW_LOCK_HASH=$(cat "${FW_LOCK_DIR}/fw.lock")
     if [ "$(printf '%s\n' "$(git rev-parse HEAD)")" != "${FW_LOCK_HASH}" ]; then
-      printf "gaming"
       git checkout "${FW_LOCK_HASH}"
     fi
   else
     git checkout master
     git pull
     git rev-parse HEAD > "${FW_LOCK_DIR}/fw.lock"
-    # git --git-dir "$GIT_DIR" rev-parse HEAD > "keyboards/${TARGET_LAYOUT}/fw.lock"
   fi
   )
 } # }}}
