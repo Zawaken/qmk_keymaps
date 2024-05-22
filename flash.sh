@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # variables # {{{
+__DIR="$( cd -- "$(dirname "${0}")" >/dev/null 2>&1 ; pwd -P )"
 FW_FOLDER='qmk_firmware'
 eval LAST_ARG=\${$#}
 TARGET_LAYOUT=${LAST_ARG%/}
+FW_REPO="https://github.com/qmk/qmk_firmware.git"
 # }}}
 
 # argument handling {{{
@@ -119,21 +121,26 @@ get_make_command() { # {{{
 } # }}}
 
 fw_lock() { # {{{
-  GIT_DIR="git --git-dir ${FW_FOLDER}/.git"
   if test ! -d ${FW_FOLDER}; then
-    git clone https://github.com/qmk/qmk_firmware.git ${FW_FOLDER}
+    git clone ${FW_REPO} ${FW_FOLDER}
   fi
-  git --git-dir ${FW_FOLDER}/.git config advice.detachedHead false
-  if test -f "keyboards/${TARGET_LAYOUT}/fw.lock"; then
-    FW_LOCK_HASH=$(cat "keyboards/${TARGET_LAYOUT}/fw.lock")
-    if $(printf '%s\n' "$(git --git-dir ${FW_FOLDER}/.git rev-parse HEAD)") -eq FW_LOCK_HASH; then
-      git --git-dir ${FW_FOLDER} checkout "$FW_LOCK_HASH"
+  (
+  FW_LOCK_DIR="$(pwd)/${KEYMAP_DIR}"
+  cd ${FW_FOLDER} || exit
+  git config advice.detachedHead false
+  if test -f "${FW_LOCK_DIR}/fw.lock"; then
+    FW_LOCK_HASH=$(cat "${FW_LOCK_DIR}/fw.lock")
+    if [ "$(printf '%s\n' "$(git rev-parse HEAD)")" != "${FW_LOCK_HASH}" ]; then
+      printf "gaming"
+      git checkout "${FW_LOCK_HASH}"
     fi
   else
     git checkout master
     git pull
-    git rev-parse HEAD > "keyboards/${TARGET_LAYOUT}/fw.lock"
+    git rev-parse HEAD > "${FW_LOCK_DIR}/fw.lock"
+    # git --git-dir "$GIT_DIR" rev-parse HEAD > "keyboards/${TARGET_LAYOUT}/fw.lock"
   fi
+  )
 } # }}}
 
 conundrum_build() { # {{{
@@ -145,6 +152,7 @@ conundrum_build() { # {{{
 get_make_command
 
 if [ "$TARGET_LAYOUT" == "conundrum" ]; then
+  FW_REPO="https://github.comf/thockco/qmk.git"
   FW_FOLDER="thockqmk"
   BUILD_SCRIPT="./build-conundrum.sh"
   MAKE_COMMAND="${QMK_USER}:uf2"
@@ -184,7 +192,7 @@ main () { # {{{
   # rsync -avh --delete common/ ${FW_FOLDER}/users/${QMK_USER}/ >/dev/null 2>&1 # Copy everything in the common directory into users/QMK_USER
   rm -rf "${FW_FOLDER:?}/${BINARY_NAME}"
 
-  cd "${FW_FOLDER}"
+  cd "${FW_FOLDER}" || exit
   # Build/flash
   # cd "${FW_FOLDER}"
   case $RUNTIME in
@@ -193,4 +201,5 @@ main () { # {{{
   esac
 } # }}}
 
+fw_lock
 main
