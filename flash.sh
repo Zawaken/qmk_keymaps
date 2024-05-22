@@ -120,6 +120,17 @@ get_make_command() { # {{{
   fi
 } # }}}
 
+prompt () { # {{{
+  _msg="${1:-Continue?}"
+  printf '%s' "${_msg} [Y/n] " >&2
+  read -r REPLY </dev/tty
+  case "${REPLY}" in
+    [Yy]*|"") return 0;;
+    [Nn]*) return 1;;
+    *) prompt 'Please answer yes or no...';;
+  esac
+} # }}}
+
 fw_lock() { # {{{
   if test ! -d ${FW_FOLDER}; then
     git clone ${FW_REPO} ${FW_FOLDER}
@@ -134,8 +145,10 @@ fw_lock() { # {{{
       git checkout "${FW_LOCK_HASH}"
     fi
   else
-    git checkout master
-    git pull
+    if prompt "No firmware lockfile found, update QMK to latest upstream?"; then
+      git checkout master
+      git pull
+    fi
     git rev-parse HEAD > "${FW_LOCK_DIR}/fw.lock"
   fi
   )
@@ -143,7 +156,7 @@ fw_lock() { # {{{
 
 get_make_command
 
-if [ "$TARGET_LAYOUT" == "conundrum" ]; then
+if [ "$TARGET_LAYOUT" == "conundrum" ]; then # {{{
   FW_REPO="https://github.com/zawaken/thockqmk.git"
   FW_FOLDER="thockqmk"
   BUILD_SCRIPT="./build-conundrum.sh"
