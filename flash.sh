@@ -144,6 +144,13 @@ fw_lock() { # {{{
     if [ "$(printf '%s\n' "$(git rev-parse HEAD)")" != "${FW_LOCK_HASH}" ]; then
       git checkout "${FW_LOCK_HASH}"
     fi
+    if test -n "$(find "${FW_LOCK_DIR}/fw.lock" -mtime +29)"; then
+      if prompt "fw.lock is more than 30d old, want to update QMK?"; then
+        git checkout master
+        git pull
+        git rev-parse HEAD > "${FW_LOCK_DIR}/fw.lock"
+      fi
+    fi
   else
     if prompt "No firmware lockfile found, update QMK to latest upstream?"; then
       git checkout master
