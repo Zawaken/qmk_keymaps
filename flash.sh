@@ -5,6 +5,7 @@ FW_FOLDER='qmk_firmware'
 eval LAST_ARG=\${$#}
 TARGET_LAYOUT=${LAST_ARG%/}
 FW_REPO="https://github.com/qmk/qmk_firmware.git"
+verbose=0
 # }}}
 
 # argument handling {{{
