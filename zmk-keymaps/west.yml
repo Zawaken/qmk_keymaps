@@ -5,9 +5,13 @@ manifest:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
   projects:
+    # - name: zmk
+    #   remote: zmkfirmware
+    #   revision: 4dfc45d4ab38c23cae61dae4699bd0fbef4e33eb
+    #   import: app/west.yml
     - name: zmk
       remote: zmkfirmware
-      revision: 4dfc45d4ab38c23cae61dae4699bd0fbef4e33eb
+      revision: main
       import: app/west.yml
     # - name: zmk
     #   remote: petejohanson
