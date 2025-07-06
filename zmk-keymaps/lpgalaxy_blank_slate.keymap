@@ -19,7 +19,7 @@
 
 / {
     chosen {
-       zmk,matrix_transform =
+       zmk,physical-layout =
 #ifdef TBLE_DUAL_2U
                        &layout_ortho_4x12_2x2u;
 #elif defined(TBLE_MIT)
