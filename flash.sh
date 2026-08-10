@@ -210,7 +210,7 @@ main () { # {{{
   # cd "${FW_FOLDER}"
   case $RUNTIME in
     podman|docker) RUNTIME="${RUNTIME}" "${BUILD_SCRIPT}" "${MAKE_COMMAND}";;
-    local) ;;
+    local) qmk flash -kb ${MAKE_PREFIX} -km ${QMK_USER};;
   esac
 } # }}}
 
