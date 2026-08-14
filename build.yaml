@@ -14,3 +14,10 @@
 ---
 include:
   - board: lpgalaxy_blank_slate
+  - board: cornix_e73
+    shield: cornix_main_left
+    artifact-name: cornix_left
+
+  - board: cornix_e73
+    shield: cornix_right
+    artifact-name: cornix_right

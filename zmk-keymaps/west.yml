@@ -1,24 +1,21 @@
 manifest:
   remotes:
+    - name: cornix-shield
+      url-base: https://github.com/hitsmaxft
     - name: petejohanson
       url-base: https://github.com/petejohanson
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
   projects:
-    # - name: zmk
-    #   remote: zmkfirmware
-    #   revision: 4dfc45d4ab38c23cae61dae4699bd0fbef4e33eb
-    #   import: app/west.yml
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    # - name: zmk
-    #   remote: petejohanson
-    #   revision: features/soft-off-take-2
-    #   import: app/west.yml
     - name: blank-slate-zmk-module
       remote: petejohanson
+      revision: main
+    - name: zmk-shield-cornix
+      remote: cornix-shield
       revision: main
   self:
     path: zmk-keymaps

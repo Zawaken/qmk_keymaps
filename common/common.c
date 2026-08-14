@@ -23,8 +23,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
     }
   }
-#ifdef COMMON_LAYERS // {{{
   switch(keycode) {
+#ifdef COMMON_LAYERS // {{{
     case COLEMAK:
       if (record->event.pressed) {
         set_single_persistent_default_layer(_COLEMAK);

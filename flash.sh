@@ -100,6 +100,19 @@ if test "${1}"; then # {{{
       IMAGE_EXTENSION='hex'
       MAKE_SUFFIX='flash'
       ;;
+    ferris_rp2040)
+      TARGET_KBD='ferris/sweep'
+      MAKE_PREFIX="$TARGET_KBD"
+      IMAGE_EXTENSION=""
+      MAKE_SUFFIX='flash'
+      CONVERT='-e CONVERT_TO=rp2040_ce'
+      ;;
+    sugarglider)
+      TARGET_KBD='mechwild/sugarglider'
+      MAKE_PREFIX=$TARGET_KBD
+      IMAGE_EXTENSION='hex'
+      MAKE_SUFFIX='flash'
+      ;;
     completion)
       echo "planck preonic m60-a viterbi nyquist lpvi framework framework-via lulu conundrum air40"
       exit 0
@@ -210,7 +223,8 @@ main () { # {{{
   # cd "${FW_FOLDER}"
   case $RUNTIME in
     podman|docker) RUNTIME="${RUNTIME}" "${BUILD_SCRIPT}" "${MAKE_COMMAND}";;
-    local) qmk flash -kb ${MAKE_PREFIX} -km ${QMK_USER};;
+    local) qmk flash -c -kb ${MAKE_PREFIX} -km ${QMK_USER} ${CONVERT};;
+    # local) qmk flash -c -kb ${MAKE_PREFIX} -km default ${CONVERT};;
   esac
 } # }}}
 
